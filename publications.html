@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publications — Robotics Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00d9ff;
+            --secondary: #0066ff;
+            --accent: #ff00aa;
+            --success: #00e87a;
+            --warning: #ffaa00;
+            --bg-dark: #080e18;
+            --bg-light: #111d2e;
+            --text: #ddeeff;
+            --text-dim: #7a92b8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        .grid-bg {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(0,200,120,0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,200,120,0.06) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none; z-index: 0;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0,0); }
+            100% { transform: translate(50px,50px); }
+        }
+
+        .glow {
+            position: fixed; border-radius: 50%;
+            pointer-events: none; z-index: 1;
+            filter: blur(120px);
+            animation: float 8s ease-in-out infinite;
+        }
+        .glow-1 { width:700px; height:700px; top:-200px; left:-200px; background:radial-gradient(circle, rgba(0,180,255,0.10), transparent 70%); }
+        .glow-2 { width:700px; height:700px; bottom:-200px; right:-200px; background:radial-gradient(circle, rgba(0,80,200,0.08), transparent 70%); animation-delay:-4s; }
+        .glow-3 { width:900px; height:500px; bottom:-100px; right:10%; background:radial-gradient(ellipse, rgba(0,190,80,0.08), transparent 70%); animation-delay:-2s; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0,0) scale(1); }
+            50% { transform: translate(40px,40px) scale(1.08); }
+        }
+
+        header {
+            padding: 28px 0;
+            position: fixed; width: 100%; top: 0;
+            background: rgba(8,14,24,0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,217,255,0.15);
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            max-width: 1400px; margin: 0 auto; padding: 0 40px;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px; font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; letter-spacing: 2px;
+        }
+
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a {
+            color: var(--text); text-decoration: none;
+            font-weight: 600; font-size: 14px; letter-spacing: 1.5px;
+            transition: color 0.3s; opacity: 0.75;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); opacity: 1; }
+
+        .container {
+            max-width: 1100px; margin: 0 auto;
+            padding: 140px 40px 100px;
+            position: relative; z-index: 2;
+        }
+
+        .page-label {
+            font-family: 'Fira Code', monospace;
+            font-size: 13px; color: var(--primary);
+            letter-spacing: 4px; margin-bottom: 16px; opacity: 0.8;
+        }
+
+        .page-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 56px; font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; line-height: 1.1; margin-bottom: 16px;
+        }
+
+        .page-subtitle {
+            font-size: 18px; color: var(--text-dim);
+            line-height: 1.6; margin-bottom: 60px;
+        }
+
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            font-family: 'Fira Code', monospace;
+            font-size: 13px; color: var(--primary);
+            text-decoration: none; letter-spacing: 2px;
+            border: 1px solid rgba(0,217,255,0.3);
+            padding: 12px 24px;
+            transition: all 0.3s; margin-bottom: 60px;
+        }
+
+        .back-btn:hover {
+            background: rgba(0,217,255,0.08);
+            border-color: var(--primary);
+        }
+
+        /* Filter bar */
+        .filter-bar {
+            display: flex; gap: 12px; flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+
+        .filter-btn {
+            font-family: 'Fira Code', monospace;
+            font-size: 12px; padding: 8px 20px;
+            background: transparent;
+            border: 1px solid rgba(0,217,255,0.2);
+            color: var(--text-dim);
+            cursor: pointer; letter-spacing: 2px;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(0,217,255,0.06);
+        }
+
+        /* Publications list */
+        .pub-list {
+            display: grid; gap: 28px;
+        }
+
+        .pub-card {
+            background: rgba(17,29,46,0.6);
+            border: 1px solid rgba(0,217,255,0.15);
+            padding: 36px 40px;
+            position: relative; overflow: hidden;
+            transition: all 0.3s;
+            animation: fadeInUp 0.5s ease-out backwards;
+        }
+
+        .pub-card:nth-child(1) { animation-delay: 0.05s; }
+        .pub-card:nth-child(2) { animation-delay: 0.10s; }
+        .pub-card:nth-child(3) { animation-delay: 0.15s; }
+        .pub-card:nth-child(4) { animation-delay: 0.20s; }
+        .pub-card:nth-child(5) { animation-delay: 0.25s; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pub-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0;
+            width: 4px; height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+
+        .pub-card:hover {
+            border-color: rgba(0,217,255,0.3);
+            transform: translateX(6px);
+            box-shadow: 0 8px 30px rgba(0,217,255,0.06);
+        }
+
+        .pub-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .pub-type {
+            font-family: 'Fira Code', monospace;
+            font-size: 11px; padding: 3px 10px;
+            letter-spacing: 2px; white-space: nowrap;
+        }
+
+        .pub-type.conference {
+            color: var(--primary);
+            border: 1px solid rgba(0,217,255,0.3);
+            background: rgba(0,217,255,0.05);
+        }
+
+        .pub-type.journal {
+            color: var(--success);
+            border: 1px solid rgba(0,232,122,0.3);
+            background: rgba(0,232,122,0.05);
+        }
+
+        .pub-type.workshop {
+            color: var(--warning);
+            border: 1px solid rgba(255,170,0,0.3);
+            background: rgba(255,170,0,0.05);
+        }
+
+        .pub-year {
+            font-family: 'Fira Code', monospace;
+            font-size: 13px; color: var(--text-dim);
+        }
+
+        .pub-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 19px; font-weight: 700;
+            color: var(--text); line-height: 1.35;
+            margin-bottom: 10px;
+        }
+
+        .pub-authors {
+            font-size: 15px; color: var(--text-dim);
+            margin-bottom: 6px;
+        }
+
+        .pub-authors strong {
+            color: var(--text); font-weight: 600;
+        }
+
+        .pub-venue {
+            font-family: 'Fira Code', monospace;
+            font-size: 13px; color: var(--primary);
+            opacity: 0.8; margin-bottom: 16px;
+        }
+
+        .pub-abstract {
+            font-size: 15px; color: var(--text-dim);
+            line-height: 1.75; margin-bottom: 20px;
+        }
+
+        .pub-links {
+            display: flex; gap: 12px; flex-wrap: wrap;
+        }
+
+        .pub-link {
+            font-family: 'Fira Code', monospace;
+            font-size: 12px; padding: 6px 16px;
+            text-decoration: none; letter-spacing: 1px;
+            transition: all 0.3s;
+            border: 1px solid rgba(0,217,255,0.25);
+            color: var(--primary);
+        }
+
+        .pub-link:hover {
+            background: rgba(0,217,255,0.1);
+            border-color: var(--primary);
+        }
+
+        footer {
+            padding: 40px 0; text-align: center;
+            border-top: 1px solid rgba(0,217,255,0.12);
+            font-family: 'Fira Code', monospace;
+            font-size: 13px; color: var(--text-dim);
+            position: relative; z-index: 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div class="glow glow-3"></div>
+
+    <header>
+        <nav>
+            <div class="logo">R&amp;M.ENGINEER</div>
+            <ul class="nav-links">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="index.html#about">ABOUT</a></li>
+                <li><a href="index.html#projects">PROJECTS</a></li>
+                <li><a href="experience.html">EXPERIENCE</a></li>
+                <li><a href="education.html">EDUCATION</a></li>
+                <li><a href="publications.html" class="active">PUBLICATIONS</a></li>
+                <li><a href="index.html#contact">CONTACT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <a href="index.html" class="back-btn">&larr; BACK TO PORTFOLIO</a>
+
+        <p class="page-label">// RESEARCH OUTPUT</p>
+        <h1 class="page-title">Publications</h1>
+        <p class="page-subtitle">Peer-reviewed papers, conference proceedings, and technical contributions to the robotics and autonomous systems research community.</p>
+
+        <div class="filter-bar">
+            <button class="filter-btn active">ALL</button>
+            <button class="filter-btn">JOURNAL</button>
+            <button class="filter-btn">CONFERENCE</button>
+            <button class="filter-btn">WORKSHOP</button>
+        </div>
+
+        <div class="pub-list">
+
+            <div class="pub-card">
+                <div class="pub-header">
+                    <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                        <span class="pub-type journal">JOURNAL</span>
+                        <span class="pub-year">2024</span>
+                    </div>
+                </div>
+                <h2 class="pub-title">Domain Randomisation Strategies for Sim-to-Real Transfer in Robotic Grasping</h2>
+                <p class="pub-authors"><strong>A. Surname</strong>, B. Coauthor, C. Coauthor</p>
+                <p class="pub-venue">IEEE Transactions on Robotics, Vol. 40, Issue 3, pp. 1234–1248</p>
+                <p class="pub-abstract">
+                    We present a systematic study of domain randomisation parameters in physics-based simulation and their effect on zero-shot transfer performance to physical robotic grasping. Through ablation across texture, lighting, mass, and friction parameters, we identify a minimal randomisation set that achieves 91.4% success rate on a benchmark of unseen objects.
+                </p>
+                <div class="pub-links">
+                    <a href="#" class="pub-link">PDF</a>
+                    <a href="#" class="pub-link">DOI</a>
+                    <a href="#" class="pub-link">CODE</a>
+                </div>
+            </div>
+
+            <div class="pub-card">
+                <div class="pub-header">
+                    <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                        <span class="pub-type conference">CONFERENCE</span>
+                        <span class="pub-year">2023</span>
+                    </div>
+                </div>
+                <h2 class="pub-title">Hybrid A*/RRT* Planning with Learned Heuristics for Warehouse Autonomous Navigation</h2>
+                <p class="pub-authors"><strong>A. Surname</strong>, D. Coauthor</p>
+                <p class="pub-venue">IEEE International Conference on Robotics and Automation (ICRA 2023), London, UK</p>
+                <p class="pub-abstract">
+                    We propose a motion planning algorithm combining informed sampling from RRT* with a neural heuristic trained to approximate the cost-to-go in cluttered warehouse environments. Our method reduces planning time by 42% compared to standard RRT* while maintaining completeness guarantees within dynamic obstacle fields.
+                </p>
+                <div class="pub-links">
+                    <a href="#" class="pub-link">PDF</a>
+                    <a href="#" class="pub-link">DOI</a>
+                    <a href="#" class="pub-link">SLIDES</a>
+                </div>
+            </div>
+
+            <div class="pub-card">
+                <div class="pub-header">
+                    <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                        <span class="pub-type conference">CONFERENCE</span>
+                        <span class="pub-year">2022</span>
+                    </div>
+                </div>
+                <h2 class="pub-title">Real-Time LiDAR-IMU Fusion for Robust Localisation in Dynamic Environments</h2>
+                <p class="pub-authors"><strong>A. Surname</strong>, E. Coauthor, F. Coauthor</p>
+                <p class="pub-venue">IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS 2022)</p>
+                <p class="pub-abstract">
+                    A tightly-coupled LiDAR-IMU state estimator incorporating a learned outlier rejection module for robust ego-motion estimation in the presence of moving objects. Evaluated on the KITTI and NuScenes benchmarks, our system achieves competitive accuracy with significantly lower latency than existing methods.
+                </p>
+                <div class="pub-links">
+                    <a href="#" class="pub-link">PDF</a>
+                    <a href="#" class="pub-link">DOI</a>
+                    <a href="#" class="pub-link">CODE</a>
+                </div>
+            </div>
+
+            <div class="pub-card">
+                <div class="pub-header">
+                    <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                        <span class="pub-type workshop">WORKSHOP</span>
+                        <span class="pub-year">2022</span>
+                    </div>
+                </div>
+                <h2 class="pub-title">Towards Data-Efficient Reinforcement Learning for Dexterous Manipulation</h2>
+                <p class="pub-authors"><strong>A. Surname</strong>, G. Coauthor</p>
+                <p class="pub-venue">Workshop on Robot Learning, CoRL 2022, Auckland, New Zealand</p>
+                <p class="pub-abstract">
+                    A position paper examining sample efficiency challenges in deep RL applied to contact-rich manipulation, proposing a curriculum learning framework that progressively increases task difficulty based on estimated agent competence.
+                </p>
+                <div class="pub-links">
+                    <a href="#" class="pub-link">PDF</a>
+                    <a href="#" class="pub-link">POSTER</a>
+                </div>
+            </div>
+
+            <div class="pub-card">
+                <div class="pub-header">
+                    <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                        <span class="pub-type journal">JOURNAL</span>
+                        <span class="pub-year">2021</span>
+                    </div>
+                </div>
+                <h2 class="pub-title">Multi-Agent Formation Control with Distributed Obstacle Avoidance for Drone Swarms</h2>
+                <p class="pub-authors">H. Coauthor, <strong>A. Surname</strong>, I. Coauthor</p>
+                <p class="pub-venue">Autonomous Robots, Vol. 46, pp. 678–694</p>
+                <p class="pub-abstract">
+                    A decentralised control architecture for maintaining geometric formation in a swarm of quadrotors while avoiding static and dynamic obstacles. Each agent uses only local sensing and limited neighbour communication, enabling scalability to large swarm sizes without a central coordinator.
+                </p>
+                <div class="pub-links">
+                    <a href="#" class="pub-link">PDF</a>
+                    <a href="#" class="pub-link">DOI</a>
+                    <a href="#" class="pub-link">VIDEO</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Robotics Portfolio</p>
+    </footer>
+
+    <script>
+        // Filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.textContent.trim();
+                document.querySelectorAll('.pub-card').forEach(card => {
+                    if (filter === 'ALL') {
+                        card.style.display = '';
+                        return;
+                    }
+                    const typeEl = card.querySelector('.pub-type');
+                    const type = typeEl ? typeEl.textContent.trim() : '';
+                    card.style.display = type === filter ? '' : 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

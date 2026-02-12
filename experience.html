@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience — Robotics Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00d9ff;
+            --secondary: #0066ff;
+            --accent: #ff00aa;
+            --success: #00e87a;
+            --bg-dark: #080e18;
+            --bg-darker: #040a10;
+            --bg-light: #111d2e;
+            --text: #ddeeff;
+            --text-dim: #7a92b8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* Background */
+        .grid-bg {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 200, 120, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 200, 120, 0.06) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none; z-index: 0;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .glow {
+            position: fixed; border-radius: 50%;
+            pointer-events: none; z-index: 1;
+            filter: blur(120px);
+            animation: float 8s ease-in-out infinite;
+        }
+        .glow-1 { width:700px; height:700px; top:-200px; left:-200px; background:radial-gradient(circle, rgba(0,180,255,0.10), transparent 70%); }
+        .glow-2 { width:700px; height:700px; bottom:-200px; right:-200px; background:radial-gradient(circle, rgba(0,80,200,0.08), transparent 70%); animation-delay:-4s; }
+        .glow-3 { width:900px; height:500px; bottom:-100px; right:10%; background:radial-gradient(ellipse, rgba(0,190,80,0.08), transparent 70%); animation-delay:-2s; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0,0) scale(1); }
+            50% { transform: translate(40px,40px) scale(1.08); }
+        }
+
+        /* Header */
+        header {
+            padding: 28px 0;
+            position: fixed; width: 100%; top: 0;
+            background: rgba(8, 14, 24, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 217, 255, 0.15);
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            max-width: 1400px; margin: 0 auto; padding: 0 40px;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px; font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; letter-spacing: 2px;
+        }
+
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a {
+            color: var(--text); text-decoration: none;
+            font-weight: 600; font-size: 14px; letter-spacing: 1.5px;
+            transition: color 0.3s; opacity: 0.75;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); opacity: 1; }
+
+        .container {
+            max-width: 1100px; margin: 0 auto;
+            padding: 140px 40px 100px;
+            position: relative; z-index: 2;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 80px;
+        }
+
+        .page-label {
+            font-family: 'Fira Code', monospace;
+            font-size: 13px; color: var(--primary);
+            letter-spacing: 4px; margin-bottom: 16px; opacity: 0.8;
+        }
+
+        .page-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 56px; font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; line-height: 1.1; margin-bottom: 16px;
+        }
+
+        .page-subtitle {
+            font-size: 18px; color: var(--text-dim); line-height: 1.6;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute; left: 0; top: 0;
+            width: 2px; height: 100%;
+            background: linear-gradient(to bottom, var(--primary), rgba(0,217,255,0.1));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 60px;
+            padding-left: 40px;
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .timeline-dot {
+            position: absolute; left: -49px; top: 6px;
+            width: 18px; height: 18px;
+            background: var(--primary);
+            border: 3px solid var(--bg-dark);
+            border-radius: 50%;
+            box-shadow: 0 0 12px rgba(0, 217, 255, 0.6);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(0,217,255,0.5); }
+            50% { box-shadow: 0 0 20px rgba(0,217,255,0.9); }
+        }
+
+        .timeline-card {
+            background: rgba(17, 29, 46, 0.6);
+            border: 1px solid rgba(0, 217, 255, 0.15);
+            padding: 36px 40px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timeline-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0;
+            width: 3px; height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--success));
+        }
+
+        .timeline-card:hover {
+            border-color: rgba(0, 217, 255, 0.35);
+            transform: translateX(6px);
+            box-shadow: 0 8px 30px rgba(0, 217, 255, 0.08);
+        }
+
+        .timeline-date {
+            font-family: 'Fira Code', monospace;
+            font-size: 12px; color: var(--primary);
+            letter-spacing: 3px; margin-bottom: 12px; opacity: 0.85;
+        }
+
+        .timeline-role {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px; font-weight: 700;
+            color: var(--text); margin-bottom: 6px;
+        }
+
+        .timeline-org {
+            font-size: 16px; font-weight: 600;
+            color: var(--primary); margin-bottom: 16px;
+            opacity: 0.9;
+        }
+
+        .timeline-desc {
+            font-size: 16px; color: var(--text-dim);
+            line-height: 1.75; margin-bottom: 20px;
+        }
+
+        .timeline-achievements {
+            list-style: none;
+        }
+
+        .timeline-achievements li {
+            padding: 6px 0;
+            font-size: 15px; color: var(--text-dim);
+            border-bottom: 1px solid rgba(0,217,255,0.07);
+            line-height: 1.5;
+        }
+
+        .timeline-achievements li::before {
+            content: '// ';
+            font-family: 'Fira Code', monospace;
+            color: var(--primary); font-size: 13px;
+        }
+
+        .timeline-tags {
+            display: flex; flex-wrap: wrap; gap: 8px;
+            margin-top: 20px;
+        }
+
+        .tag {
+            font-family: 'Fira Code', monospace;
+            font-size: 11px; padding: 4px 10px;
+            background: rgba(0, 217, 255, 0.08);
+            border: 1px solid rgba(0,217,255,0.25);
+            color: var(--primary); letter-spacing: 1px;
+        }
+
+        /* Back button */
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            font-family: 'Fira Code', monospace;
+            font-size: 13px; color: var(--primary);
+            text-decoration: none; letter-spacing: 2px;
+            border: 1px solid rgba(0,217,255,0.3);
+            padding: 12px 24px;
+            transition: all 0.3s; margin-bottom: 60px;
+        }
+
+        .back-btn:hover {
+            background: rgba(0,217,255,0.08);
+            border-color: var(--primary);
+        }
+
+        footer {
+            padding: 40px 0; text-align: center;
+            border-top: 1px solid rgba(0,217,255,0.12);
+            font-family: 'Fira Code', monospace;
+            font-size: 13px; color: var(--text-dim);
+            position: relative; z-index: 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div class="glow glow-3"></div>
+
+    <header>
+        <nav>
+            <div class="logo">R&amp;M.ENGINEER</div>
+            <ul class="nav-links">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="index.html#about">ABOUT</a></li>
+                <li><a href="index.html#projects">PROJECTS</a></li>
+                <li><a href="experience.html" class="active">EXPERIENCE</a></li>
+                <li><a href="education.html">EDUCATION</a></li>
+                <li><a href="publications.html">PUBLICATIONS</a></li>
+                <li><a href="index.html#contact">CONTACT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <a href="index.html" class="back-btn">&larr; BACK TO PORTFOLIO</a>
+
+        <div class="page-header">
+            <p class="page-label">// CAREER HISTORY</p>
+            <h1 class="page-title">Experience</h1>
+            <p class="page-subtitle">A record of professional roles, research positions, and engineering contributions across robotics and automation.</p>
+        </div>
+
+        <div class="timeline">
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <div class="timeline-date">2023 &mdash; PRESENT</div>
+                    <h2 class="timeline-role">Senior Robotics Engineer</h2>
+                    <div class="timeline-org">Company Name &mdash; Location</div>
+                    <p class="timeline-desc">
+                        Leading the development of autonomous mobile platforms for industrial logistics. Responsible for full-stack integration from sensor fusion pipelines through to fleet management software.
+                    </p>
+                    <ul class="timeline-achievements">
+                        <li>Designed and deployed a LiDAR-IMU SLAM system achieving sub-5cm localisation accuracy in dynamic warehouse environments</li>
+                        <li>Reduced path planning computation time by 40% through a custom hybrid A*/RRT* algorithm</li>
+                        <li>Managed a team of three junior engineers across hardware and software workstreams</li>
+                    </ul>
+                    <div class="timeline-tags">
+                        <span class="tag">ROS2</span>
+                        <span class="tag">C++</span>
+                        <span class="tag">SLAM</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">Docker</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <div class="timeline-date">2021 &mdash; 2023</div>
+                    <h2 class="timeline-role">Robotics Research Engineer</h2>
+                    <div class="timeline-org">Research Institute / University &mdash; Location</div>
+                    <p class="timeline-desc">
+                        Conducted applied research in autonomous manipulation, focusing on model-free reinforcement learning approaches for dexterous robotic grasping.
+                    </p>
+                    <ul class="timeline-achievements">
+                        <li>Published three peer-reviewed papers on sim-to-real transfer for robotic manipulation</li>
+                        <li>Developed a modular software framework used by five research groups across the faculty</li>
+                        <li>Supervised two MSc dissertation projects in robot learning</li>
+                    </ul>
+                    <div class="timeline-tags">
+                        <span class="tag">PyTorch</span>
+                        <span class="tag">Gazebo</span>
+                        <span class="tag">MoveIt</span>
+                        <span class="tag">RL</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <div class="timeline-date">2020 &mdash; 2021</div>
+                    <h2 class="timeline-role">Embedded Systems Engineer (Internship)</h2>
+                    <div class="timeline-org">Tech Company &mdash; Location</div>
+                    <p class="timeline-desc">
+                        Developed firmware for next-generation motor controllers and sensor interface boards used in collaborative robotic arms.
+                    </p>
+                    <ul class="timeline-achievements">
+                        <li>Implemented real-time torque control loops on STM32 microcontrollers with sub-millisecond latency</li>
+                        <li>Designed CAN bus communication protocol for multi-axis synchronisation</li>
+                    </ul>
+                    <div class="timeline-tags">
+                        <span class="tag">STM32</span>
+                        <span class="tag">C</span>
+                        <span class="tag">CAN Bus</span>
+                        <span class="tag">FreeRTOS</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <div class="timeline-date">2019 &mdash; 2020</div>
+                    <h2 class="timeline-role">Junior Automation Engineer</h2>
+                    <div class="timeline-org">Engineering Firm &mdash; Location</div>
+                    <p class="timeline-desc">
+                        Supported integration and commissioning of PLC-based industrial automation systems for manufacturing clients across the automotive sector.
+                    </p>
+                    <ul class="timeline-achievements">
+                        <li>Programmed Siemens S7-1500 PLCs for conveyor and assembly line control</li>
+                        <li>Produced technical documentation and training materials for client handover</li>
+                    </ul>
+                    <div class="timeline-tags">
+                        <span class="tag">PLC</span>
+                        <span class="tag">SCADA</span>
+                        <span class="tag">TIA Portal</span>
+                        <span class="tag">HMI</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Robotics Portfolio</p>
+    </footer>
+</body>
+</html>

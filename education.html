@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education — Robotics Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00d9ff;
+            --secondary: #0066ff;
+            --accent: #ff00aa;
+            --success: #00e87a;
+            --warning: #ffaa00;
+            --bg-dark: #080e18;
+            --bg-darker: #040a10;
+            --bg-light: #111d2e;
+            --text: #ddeeff;
+            --text-dim: #7a92b8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        .grid-bg {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 200, 120, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 200, 120, 0.06) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none; z-index: 0;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0,0); }
+            100% { transform: translate(50px,50px); }
+        }
+
+        .glow {
+            position: fixed; border-radius: 50%;
+            pointer-events: none; z-index: 1;
+            filter: blur(120px);
+            animation: float 8s ease-in-out infinite;
+        }
+        .glow-1 { width:700px; height:700px; top:-200px; left:-200px; background:radial-gradient(circle, rgba(0,180,255,0.10), transparent 70%); }
+        .glow-2 { width:700px; height:700px; bottom:-200px; right:-200px; background:radial-gradient(circle, rgba(0,80,200,0.08), transparent 70%); animation-delay:-4s; }
+        .glow-3 { width:900px; height:500px; bottom:-100px; right:10%; background:radial-gradient(ellipse, rgba(0,190,80,0.08), transparent 70%); animation-delay:-2s; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0,0) scale(1); }
+            50% { transform: translate(40px,40px) scale(1.08); }
+        }
+
+        header {
+            padding: 28px 0;
+            position: fixed; width: 100%; top: 0;
+            background: rgba(8,14,24,0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,217,255,0.15);
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            max-width: 1400px; margin: 0 auto; padding: 0 40px;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px; font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; letter-spacing: 2px;
+        }
+
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a {
+            color: var(--text); text-decoration: none;
+            font-weight: 600; font-size: 14px; letter-spacing: 1.5px;
+            transition: color 0.3s; opacity: 0.75;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); opacity: 1; }
+
+        .container {
+            max-width: 1100px; margin: 0 auto;
+            padding: 140px 40px 100px;
+            position: relative; z-index: 2;
+        }
+
+        .page-label {
+            font-family: 'Fira Code', monospace;
+            font-size: 13px; color: var(--primary);
+            letter-spacing: 4px; margin-bottom: 16px; opacity: 0.8;
+        }
+
+        .page-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 56px; font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; line-height: 1.1; margin-bottom: 16px;
+        }
+
+        .page-subtitle {
+            font-size: 18px; color: var(--text-dim);
+            line-height: 1.6; margin-bottom: 80px;
+        }
+
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            font-family: 'Fira Code', monospace;
+            font-size: 13px; color: var(--primary);
+            text-decoration: none; letter-spacing: 2px;
+            border: 1px solid rgba(0,217,255,0.3);
+            padding: 12px 24px;
+            transition: all 0.3s; margin-bottom: 60px;
+        }
+
+        .back-btn:hover {
+            background: rgba(0,217,255,0.08);
+            border-color: var(--primary);
+        }
+
+        /* Education Cards */
+        .edu-grid {
+            display: grid;
+            gap: 36px;
+        }
+
+        .edu-card {
+            background: rgba(17,29,46,0.6);
+            border: 1px solid rgba(0,217,255,0.15);
+            padding: 44px 48px;
+            position: relative; overflow: hidden;
+            transition: all 0.3s;
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .edu-card:nth-child(1) { animation-delay: 0.1s; }
+        .edu-card:nth-child(2) { animation-delay: 0.2s; }
+        .edu-card:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .edu-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--success));
+        }
+
+        .edu-card:hover {
+            border-color: rgba(0,217,255,0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,217,255,0.06);
+        }
+
+        .edu-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .edu-date {
+            font-family: 'Fira Code', monospace;
+            font-size: 12px; color: var(--primary);
+            letter-spacing: 3px; opacity: 0.85;
+        }
+
+        .edu-badge {
+            font-family: 'Fira Code', monospace;
+            font-size: 11px; color: var(--warning);
+            border: 1px solid rgba(255,170,0,0.3);
+            padding: 4px 12px; letter-spacing: 2px;
+        }
+
+        .edu-degree {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px; font-weight: 700;
+            color: var(--text); margin-bottom: 6px;
+        }
+
+        .edu-institution {
+            font-size: 17px; font-weight: 600;
+            color: var(--primary); opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .edu-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+            padding: 20px 0;
+            border-top: 1px solid rgba(0,217,255,0.08);
+            border-bottom: 1px solid rgba(0,217,255,0.08);
+        }
+
+        .edu-detail-item .detail-label {
+            font-family: 'Fira Code', monospace;
+            font-size: 11px; color: var(--text-dim);
+            letter-spacing: 2px; margin-bottom: 4px;
+        }
+
+        .edu-detail-item .detail-value {
+            font-size: 15px; font-weight: 600; color: var(--text);
+        }
+
+        .edu-desc {
+            font-size: 16px; color: var(--text-dim);
+            line-height: 1.75;
+        }
+
+        .edu-courses {
+            margin-top: 20px;
+        }
+
+        .edu-courses-title {
+            font-family: 'Fira Code', monospace;
+            font-size: 12px; color: var(--text-dim);
+            letter-spacing: 3px; margin-bottom: 12px;
+        }
+
+        .course-tags {
+            display: flex; flex-wrap: wrap; gap: 8px;
+        }
+
+        .course-tag {
+            font-family: 'Fira Code', monospace;
+            font-size: 11px; padding: 4px 10px;
+            background: rgba(0,232,122,0.06);
+            border: 1px solid rgba(0,232,122,0.2);
+            color: var(--success);
+        }
+
+        footer {
+            padding: 40px 0; text-align: center;
+            border-top: 1px solid rgba(0,217,255,0.12);
+            font-family: 'Fira Code', monospace;
+            font-size: 13px; color: var(--text-dim);
+            position: relative; z-index: 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div class="glow glow-3"></div>
+
+    <header>
+        <nav>
+            <div class="logo">R&amp;M.ENGINEER</div>
+            <ul class="nav-links">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="index.html#about">ABOUT</a></li>
+                <li><a href="index.html#projects">PROJECTS</a></li>
+                <li><a href="experience.html">EXPERIENCE</a></li>
+                <li><a href="education.html" class="active">EDUCATION</a></li>
+                <li><a href="publications.html">PUBLICATIONS</a></li>
+                <li><a href="index.html#contact">CONTACT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <a href="index.html" class="back-btn">&larr; BACK TO PORTFOLIO</a>
+
+        <p class="page-label">// ACADEMIC BACKGROUND</p>
+        <h1 class="page-title">Education</h1>
+        <p class="page-subtitle">Academic degrees, research training, and professional certifications that underpin my engineering practice.</p>
+
+        <div class="edu-grid">
+
+            <div class="edu-card">
+                <div class="edu-meta">
+                    <span class="edu-date">2019 &mdash; 2021</span>
+                    <span class="edu-badge">MSc DEGREE</span>
+                </div>
+                <h2 class="edu-degree">MSc Robotics &amp; Autonomous Systems</h2>
+                <div class="edu-institution">University Name &mdash; City, Country</div>
+                <div class="edu-details">
+                    <div class="edu-detail-item">
+                        <div class="detail-label">GPA / GRADE</div>
+                        <div class="detail-value">Distinction (3.9 / 4.0)</div>
+                    </div>
+                    <div class="edu-detail-item">
+                        <div class="detail-label">THESIS</div>
+                        <div class="detail-value">Sim-to-Real Transfer in Robotic Grasping</div>
+                    </div>
+                    <div class="edu-detail-item">
+                        <div class="detail-label">SUPERVISOR</div>
+                        <div class="detail-value">Prof. Supervisor Name</div>
+                    </div>
+                </div>
+                <p class="edu-desc">
+                    Postgraduate research programme focusing on the intersection of control theory, machine learning, and physical robot systems. Dissertation investigated domain randomisation techniques for bridging the sim-to-real gap in model-free reinforcement learning approaches to dexterous manipulation.
+                </p>
+                <div class="edu-courses">
+                    <p class="edu-courses-title">KEY MODULES</p>
+                    <div class="course-tags">
+                        <span class="course-tag">Advanced Robotics</span>
+                        <span class="course-tag">Computer Vision</span>
+                        <span class="course-tag">Machine Learning</span>
+                        <span class="course-tag">Motion Planning</span>
+                        <span class="course-tag">Sensor Fusion</span>
+                        <span class="course-tag">Human-Robot Interaction</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="edu-card">
+                <div class="edu-meta">
+                    <span class="edu-date">2015 &mdash; 2019</span>
+                    <span class="edu-badge">BEng DEGREE</span>
+                </div>
+                <h2 class="edu-degree">BEng Mechatronics Engineering</h2>
+                <div class="edu-institution">University Name &mdash; City, Country</div>
+                <div class="edu-details">
+                    <div class="edu-detail-item">
+                        <div class="detail-label">GPA / GRADE</div>
+                        <div class="detail-value">First Class Honours (3.8 / 4.0)</div>
+                    </div>
+                    <div class="edu-detail-item">
+                        <div class="detail-label">FINAL PROJECT</div>
+                        <div class="detail-value">Autonomous Obstacle Avoidance Platform</div>
+                    </div>
+                    <div class="edu-detail-item">
+                        <div class="detail-label">AWARD</div>
+                        <div class="detail-value">Best Final Year Project Prize</div>
+                    </div>
+                </div>
+                <p class="edu-desc">
+                    Four-year integrated programme covering mechanical design, electronics, control systems, and software engineering. Final year project developed a low-cost autonomous ground vehicle capable of real-time obstacle detection and avoidance using a monocular camera and depth estimation network.
+                </p>
+                <div class="edu-courses">
+                    <p class="edu-courses-title">KEY MODULES</p>
+                    <div class="course-tags">
+                        <span class="course-tag">Dynamics &amp; Control</span>
+                        <span class="course-tag">Embedded Systems</span>
+                        <span class="course-tag">Mechanical Design</span>
+                        <span class="course-tag">Digital Electronics</span>
+                        <span class="course-tag">Signal Processing</span>
+                        <span class="course-tag">Thermodynamics</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="edu-card">
+                <div class="edu-meta">
+                    <span class="edu-date">2022</span>
+                    <span class="edu-badge">CERTIFICATION</span>
+                </div>
+                <h2 class="edu-degree">ROS2 Advanced Developer Certification</h2>
+                <div class="edu-institution">Online Platform / Institution Name</div>
+                <div class="edu-details">
+                    <div class="edu-detail-item">
+                        <div class="detail-label">DURATION</div>
+                        <div class="detail-value">6 Months</div>
+                    </div>
+                    <div class="edu-detail-item">
+                        <div class="detail-label">CREDENTIAL ID</div>
+                        <div class="detail-value">CERT-XXXX-2022</div>
+                    </div>
+                </div>
+                <p class="edu-desc">
+                    Comprehensive professional certification covering ROS2 architecture, navigation stack, manipulation planning with MoveIt2, and production deployment practices for real-world robotic systems.
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Robotics Portfolio</p>
+    </footer>
+</body>
+</html>
