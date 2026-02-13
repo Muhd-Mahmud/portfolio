@@ -638,183 +638,280 @@
             color: var(--text-dim);
         }
 
-        /* Admin Panel Styles */
+        /* ─── Admin Trigger ─── */
         .admin-trigger {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background: rgba(0, 217, 255, 0.1);
-            border: 1px solid rgba(0, 217, 255, 0.3);
+            bottom: 24px; right: 24px;
+            width: 52px; height: 52px;
+            background: rgba(0,217,255,0.07);
+            border: 1px solid rgba(0,217,255,0.25);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 999;
-            transition: all 0.3s;
-            opacity: 0.3;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 9000;
+            transition: all 0.3s; opacity: 0.35;
+            font-family: 'Fira Code', monospace;
+            font-size: 11px; color: var(--primary);
+            letter-spacing: 1px; user-select: none;
         }
+        .admin-trigger:hover { opacity: 1; background: rgba(0,217,255,0.14); box-shadow: 0 0 16px rgba(0,217,255,0.3); }
+        .admin-trigger.flash { opacity: 1; background: rgba(0,217,255,0.25); box-shadow: 0 0 20px rgba(0,217,255,0.5); }
 
-        .admin-trigger:hover {
-            opacity: 1;
-            background: rgba(0, 217, 255, 0.2);
+        /* ─── Login Modal ─── */
+        .admin-login-overlay {
+            position: fixed; inset: 0;
+            background: rgba(4,10,16,0.96);
+            display: none; align-items: center; justify-content: center;
+            z-index: 10000; backdrop-filter: blur(6px);
         }
+        .admin-login-overlay.active { display: flex; }
 
-        .admin-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-        }
-
-        .admin-modal.active {
-            display: flex;
-        }
-
-        .admin-login {
+        .admin-login-box {
             background: var(--bg-light);
-            border: 2px solid var(--primary);
-            padding: 50px;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 0 40px rgba(0, 217, 255, 0.3);
+            border: 1px solid rgba(0,217,255,0.3);
+            box-shadow: 0 0 60px rgba(0,217,255,0.15);
+            padding: 50px 48px; width: 440px; max-width: 94vw;
         }
-
-        .admin-login h2 {
+        .admin-login-box h2 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 32px;
-            margin-bottom: 30px;
-            color: var(--primary);
+            font-size: 26px; font-weight: 900;
+            color: var(--primary); margin-bottom: 8px; letter-spacing: 2px;
+        }
+        .admin-login-box p { font-size: 14px; color: var(--text-dim); margin-bottom: 32px; }
+
+        .afield { margin-bottom: 20px; }
+        .afield label {
+            display: block; font-family: 'Fira Code', monospace;
+            font-size: 11px; color: var(--text-dim);
+            letter-spacing: 2px; margin-bottom: 7px;
+        }
+        .afield input {
+            width: 100%; padding: 12px 14px;
+            background: rgba(8,14,24,0.9);
+            border: 1px solid rgba(0,217,255,0.2);
+            color: var(--text); font-family: 'Rajdhani', sans-serif;
+            font-size: 15px; outline: none; transition: border 0.2s;
+        }
+        .afield input:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(0,217,255,0.15); }
+        .login-btns { display: flex; gap: 14px; margin-top: 28px; }
+
+        /* ─── Admin Panel (full-screen overlay) ─── */
+        #admin-panel {
+            position: fixed; inset: 0;
+            background: rgba(4,10,16,0.98);
+            z-index: 9999; display: none;
+            flex-direction: column; overflow: hidden;
+        }
+        #admin-panel.active { display: flex; }
+
+        .ap-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 18px 32px;
+            border-bottom: 1px solid rgba(0,217,255,0.15);
+            background: rgba(8,14,24,0.95);
+            flex-shrink: 0;
+        }
+        .ap-header-left { display: flex; align-items: center; gap: 24px; }
+        .ap-logo {
+            font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            letter-spacing: 2px;
+        }
+        .ap-badge {
+            font-family: 'Fira Code', monospace; font-size: 11px;
+            color: var(--primary); border: 1px solid rgba(0,217,255,0.3);
+            padding: 3px 10px; letter-spacing: 2px;
+        }
+        .ap-header-right { display: flex; gap: 12px; align-items: center; }
+
+        /* Tabs */
+        .ap-tabs {
+            display: flex; gap: 4px; padding: 0 32px;
+            border-bottom: 1px solid rgba(0,217,255,0.1);
+            background: rgba(8,14,24,0.7); flex-shrink: 0; overflow-x: auto;
+        }
+        .ap-tab {
+            font-family: 'Fira Code', monospace; font-size: 12px; font-weight: 600;
+            color: var(--text-dim); letter-spacing: 2px;
+            padding: 14px 22px; cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.25s; white-space: nowrap;
+            background: none; border-top: none; border-left: none; border-right: none;
+        }
+        .ap-tab:hover { color: var(--primary); }
+        .ap-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+        /* Content pane */
+        .ap-body { flex: 1; overflow-y: auto; padding: 36px 40px; }
+        .ap-pane { display: none; }
+        .ap-pane.active { display: block; }
+
+        /* Section heading inside panel */
+        .ap-section-title {
+            font-family: 'Orbitron', sans-serif; font-size: 20px; font-weight: 700;
+            color: var(--text); margin-bottom: 28px;
+            padding-bottom: 14px; border-bottom: 1px solid rgba(0,217,255,0.12);
         }
 
-        .input-group {
-            margin-bottom: 20px;
+        /* Generic form elements inside panel */
+        .ap-row { margin-bottom: 20px; }
+        .ap-row label {
+            display: block; font-family: 'Fira Code', monospace;
+            font-size: 11px; color: var(--text-dim);
+            letter-spacing: 2px; margin-bottom: 7px;
+        }
+        .ap-row input, .ap-row textarea, .ap-row select {
+            width: 100%; padding: 11px 14px;
+            background: rgba(8,14,24,0.8);
+            border: 1px solid rgba(0,217,255,0.18);
+            color: var(--text); font-family: 'Rajdhani', sans-serif;
+            font-size: 15px; outline: none; transition: border 0.2s;
+        }
+        .ap-row input:focus, .ap-row textarea:focus { border-color: var(--primary); }
+        .ap-row textarea { resize: vertical; min-height: 100px; }
+
+        /* Two-column grid for forms */
+        .ap-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+        /* Upload zone */
+        .upload-zone {
+            border: 2px dashed rgba(0,217,255,0.25);
+            padding: 32px; text-align: center;
+            cursor: pointer; transition: all 0.25s; position: relative;
+            margin-bottom: 4px;
+        }
+        .upload-zone:hover { border-color: var(--primary); background: rgba(0,217,255,0.04); }
+        .upload-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+        .upload-zone .uz-icon { font-size: 28px; margin-bottom: 8px; display: block; }
+        .upload-zone .uz-label {
+            font-family: 'Fira Code', monospace; font-size: 12px; color: var(--text-dim);
+            letter-spacing: 1px;
+        }
+        .upload-zone .uz-hint { font-size: 12px; color: var(--text-dim); opacity: 0.6; margin-top: 4px; }
+        .upload-preview {
+            width: 100%; max-height: 180px; object-fit: cover;
+            border: 1px solid rgba(0,217,255,0.2); margin-top: 12px; display: none;
         }
 
-        .input-group label {
-            display: block;
-            font-family: 'Fira Code', monospace;
-            font-size: 14px;
-            color: var(--text-dim);
-            margin-bottom: 8px;
+        /* Gallery grid */
+        .gallery-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(130px,1fr)); gap: 10px;
+            margin-top: 14px;
+        }
+        .gallery-thumb {
+            position: relative; aspect-ratio: 1; overflow: hidden;
+            border: 1px solid rgba(0,217,255,0.2);
+        }
+        .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .gallery-thumb .rm-thumb {
+            position: absolute; top: 4px; right: 4px;
+            background: rgba(255,0,100,0.8); color: #fff;
+            border: none; width: 20px; height: 20px; cursor: pointer;
+            font-size: 12px; display: flex; align-items: center; justify-content: center;
+            border-radius: 50%;
         }
 
-        .input-group input {
-            width: 100%;
-            padding: 12px;
-            background: var(--bg-dark);
-            border: 1px solid rgba(0, 217, 255, 0.3);
-            color: var(--text);
-            font-family: 'Fira Code', monospace;
-            font-size: 14px;
+        /* Rich text toolbar */
+        .rte-toolbar {
+            display: flex; gap: 4px; padding: 8px 10px;
+            background: rgba(0,217,255,0.04);
+            border: 1px solid rgba(0,217,255,0.15);
+            border-bottom: none; flex-wrap: wrap;
         }
-
-        .input-group input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 10px rgba(0, 217, 255, 0.2);
+        .rte-toolbar button {
+            background: transparent; border: 1px solid rgba(0,217,255,0.15);
+            color: var(--text-dim); padding: 4px 10px; cursor: pointer;
+            font-family: 'Fira Code', monospace; font-size: 12px;
+            transition: all 0.2s;
         }
-
-        .admin-buttons {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
+        .rte-toolbar button:hover { background: rgba(0,217,255,0.1); color: var(--primary); border-color: var(--primary); }
+        .rte-editor {
+            min-height: 200px; padding: 16px;
+            background: rgba(8,14,24,0.8);
+            border: 1px solid rgba(0,217,255,0.18);
+            color: var(--text); font-family: 'Rajdhani', sans-serif;
+            font-size: 15px; line-height: 1.7; outline: none;
         }
+        .rte-editor:focus { border-color: var(--primary); }
+        .rte-editor p { margin-bottom: 10px; }
 
-        .admin-panel {
-            position: fixed;
-            top: 100px;
-            right: -400px;
-            width: 400px;
-            height: calc(100vh - 100px);
-            background: var(--bg-light);
-            border-left: 2px solid var(--primary);
-            padding: 30px;
-            overflow-y: auto;
-            z-index: 999;
-            transition: right 0.3s;
-            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+        /* Card list (projects / experience / education / publications) */
+        .content-card-list { display: grid; gap: 14px; margin-bottom: 24px; }
+        .content-card {
+            background: rgba(17,29,46,0.7);
+            border: 1px solid rgba(0,217,255,0.15);
+            padding: 18px 22px;
+            display: flex; align-items: center; justify-content: space-between; gap: 16px;
         }
+        .content-card-info h4 { font-family: 'Orbitron', sans-serif; font-size: 14px; color: var(--text); margin-bottom: 4px; }
+        .content-card-info p { font-size: 13px; color: var(--text-dim); }
+        .content-card-actions { display: flex; gap: 8px; flex-shrink: 0; }
 
-        .admin-panel.active {
-            right: 0;
+        /* Small action buttons */
+        .abtn {
+            font-family: 'Fira Code', monospace; font-size: 11px;
+            padding: 6px 14px; cursor: pointer; letter-spacing: 1px;
+            border: 1px solid; transition: all 0.2s; background: transparent;
         }
-
-        .admin-panel h3 {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--primary);
-            margin-bottom: 20px;
-            font-size: 20px;
+        .abtn-edit { color: var(--primary); border-color: rgba(0,217,255,0.3); }
+        .abtn-edit:hover { background: rgba(0,217,255,0.1); border-color: var(--primary); }
+        .abtn-del { color: var(--accent); border-color: rgba(255,0,170,0.3); }
+        .abtn-del:hover { background: rgba(255,0,170,0.1); border-color: var(--accent); }
+        .abtn-save { color: #00e87a; border-color: rgba(0,232,122,0.3); }
+        .abtn-save:hover { background: rgba(0,232,122,0.1); border-color: #00e87a; }
+        .abtn-add {
+            font-family: 'Fira Code', monospace; font-size: 12px; letter-spacing: 2px;
+            padding: 12px 28px; cursor: pointer;
+            background: transparent; color: var(--primary);
+            border: 1px solid rgba(0,217,255,0.3);
+            transition: all 0.2s; width: 100%; margin-bottom: 24px;
         }
-
-        .edit-section {
-            margin-bottom: 30px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid rgba(0, 217, 255, 0.2);
+        .abtn-add:hover { background: rgba(0,217,255,0.07); border-color: var(--primary); }
+        .abtn-primary {
+            background: linear-gradient(135deg,var(--primary),var(--secondary));
+            color: var(--bg-dark); border: none;
+            font-family:'Fira Code',monospace; font-size:13px;
+            padding:12px 28px; cursor:pointer; letter-spacing:1px; transition:opacity 0.2s;
         }
-
-        .edit-section label {
-            display: block;
-            font-family: 'Fira Code', monospace;
-            font-size: 12px;
-            color: var(--text-dim);
-            margin-bottom: 5px;
+        .abtn-primary:hover { opacity: 0.85; }
+        .abtn-ghost {
+            background: transparent; color: var(--text-dim);
+            border: 1px solid rgba(255,255,255,0.1);
+            font-family:'Fira Code',monospace; font-size:13px;
+            padding:12px 28px; cursor:pointer; letter-spacing:1px; transition:all 0.2s;
         }
+        .abtn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.25); }
 
-        .edit-section input,
-        .edit-section textarea {
-            width: 100%;
-            padding: 10px;
-            background: var(--bg-dark);
-            border: 1px solid rgba(0, 217, 255, 0.3);
-            color: var(--text);
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 14px;
-            margin-bottom: 15px;
+        /* Item editor sub-form */
+        .item-editor {
+            background: rgba(0,217,255,0.03);
+            border: 1px solid rgba(0,217,255,0.15);
+            padding: 28px 28px 20px; margin-bottom: 20px; display: none;
         }
-
-        .edit-section textarea {
-            resize: vertical;
-            min-height: 100px;
+        .item-editor.open { display: block; }
+        .item-editor-title {
+            font-family:'Orbitron',sans-serif; font-size:15px; color:var(--primary);
+            margin-bottom:22px; letter-spacing:1px;
         }
+        .item-editor-footer { display:flex; gap:12px; margin-top:18px; justify-content:flex-end; }
 
-        .admin-controls {
-            position: sticky;
-            bottom: 0;
-            background: var(--bg-light);
-            padding: 20px 0;
-            border-top: 1px solid rgba(0, 217, 255, 0.2);
+        /* Status toast */
+        .ap-toast {
+            position: fixed; bottom: 90px; right: 28px;
+            background: rgba(0,232,122,0.15); border: 1px solid #00e87a;
+            color: #00e87a; padding: 12px 24px;
+            font-family:'Fira Code',monospace; font-size:12px; letter-spacing:1px;
+            z-index: 11000; opacity: 0; transition: opacity 0.3s;
+            pointer-events: none;
         }
+        .ap-toast.show { opacity: 1; }
 
-        .project-edit {
-            background: rgba(0, 217, 255, 0.05);
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(0, 217, 255, 0.2);
-        }
-
-        .delete-btn {
-            background: rgba(255, 0, 170, 0.2);
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            padding: 8px 16px;
-            font-family: 'Fira Code', monospace;
-            font-size: 12px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .delete-btn:hover {
-            background: var(--accent);
-            color: var(--bg-dark);
+        /* Save bar */
+        .ap-save-bar {
+            padding: 16px 40px;
+            border-top: 1px solid rgba(0,217,255,0.12);
+            background: rgba(8,14,24,0.95); flex-shrink: 0;
+            display: flex; justify-content: flex-end; gap: 14px;
         }
 
         /* Responsive */
@@ -1117,303 +1214,939 @@
         </div>
     </footer>
 
-    <!-- Admin Trigger (Triple Click) -->
-    <div class="admin-trigger" id="admin-trigger" title="Triple-click for admin" style="font-family:'Fira Code',monospace; font-size:12px; color:var(--primary);">ADM</div>
+    <!-- Admin Trigger -->
+    <div class="admin-trigger" id="admin-trigger" title="Triple-click for admin">ADM</div>
 
-    <!-- Admin Login Modal -->
-    <div class="admin-modal" id="admin-modal">
-        <div class="admin-login">
+    <!-- Login Overlay -->
+    <div class="admin-login-overlay" id="admin-login-overlay">
+        <div class="admin-login-box">
             <h2>ADMIN ACCESS</h2>
-            <form id="admin-form">
-                <div class="input-group">
-                    <label>USERNAME</label>
-                    <input type="text" id="admin-username" required>
-                </div>
-                <div class="input-group">
-                    <label>PASSWORD</label>
-                    <input type="password" id="admin-password" required>
-                </div>
-                <div class="admin-buttons">
-                    <button type="submit" class="btn btn-primary">LOGIN</button>
-                    <button type="button" class="btn btn-secondary" id="cancel-login">CANCEL</button>
+            <p>Enter your credentials to open the content editor.</p>
+            <form id="admin-form" onsubmit="return false;">
+                <div class="afield"><label>USERNAME</label><input type="text" id="admin-username" autocomplete="off"></div>
+                <div class="afield"><label>PASSWORD</label><input type="password" id="admin-password"></div>
+                <div class="login-btns">
+                    <button class="abtn-primary" id="do-login">LOGIN</button>
+                    <button class="abtn-ghost" id="cancel-login">CANCEL</button>
                 </div>
             </form>
-            <p style="margin-top: 20px; font-size: 12px; color: var(--text-dim);">
-                Hint: Check the source code for credentials
-            </p>
         </div>
     </div>
 
-    <!-- Admin Panel -->
-    <div class="admin-panel" id="admin-panel">
-        <h3>CONTENT EDITOR</h3>
-        
-        <div class="edit-section">
-            <h4 style="color: var(--primary); margin-bottom: 15px;">HERO SECTION</h4>
-            <label>Name</label>
-            <input type="text" id="edit-name" value="YOUR NAME">
-            <label>Title</label>
-            <input type="text" id="edit-title" value="ROBOTICS & MECHATRONICS ENGINEER">
-            <label>Tagline</label>
-            <textarea id="edit-tagline">Designing autonomous systems and intelligent machines that push the boundaries of what's possible in robotics and automation.</textarea>
-            <label>Profile Image URL</label>
-            <input type="text" id="edit-image" value="profile.jpg">
+    <!-- Full-screen Admin Panel -->
+    <div id="admin-panel">
+        <div class="ap-header">
+            <div class="ap-header-left">
+                <div class="ap-logo">R&amp;M.ENGINEER</div>
+                <span class="ap-badge">CONTENT EDITOR</span>
+            </div>
+            <div class="ap-header-right">
+                <button class="abtn-primary" id="save-all-btn">SAVE ALL CHANGES</button>
+                <button class="abtn-ghost" id="logout-btn">LOGOUT</button>
+            </div>
         </div>
 
-        <div class="edit-section">
-            <h4 style="color: var(--primary); margin-bottom: 15px;">CONTACT INFO</h4>
-            <label>Email</label>
-            <input type="email" id="edit-email" value="your.email@example.com">
-            <label>GitHub Username</label>
-            <input type="text" id="edit-github" value="yourusername">
-            <label>LinkedIn Username</label>
-            <input type="text" id="edit-linkedin" value="yourusername">
-            <label>Twitter Username</label>
-            <input type="text" id="edit-twitter" value="yourusername">
+        <div class="ap-tabs">
+            <button class="ap-tab active" data-tab="profile">PROFILE</button>
+            <button class="ap-tab" data-tab="projects">PROJECTS</button>
+            <button class="ap-tab" data-tab="experience">EXPERIENCE</button>
+            <button class="ap-tab" data-tab="education">EDUCATION</button>
+            <button class="ap-tab" data-tab="publications">PUBLICATIONS</button>
+            <button class="ap-tab" data-tab="contact">CONTACT</button>
         </div>
 
-        <div class="edit-section">
-            <h4 style="color: var(--primary); margin-bottom: 15px;">PROJECTS</h4>
-            <div id="projects-editor"></div>
-            <button class="btn btn-secondary" id="add-project" style="width: 100%; margin-top: 15px;">+ ADD PROJECT</button>
-        </div>
+        <div class="ap-body">
 
-        <div class="admin-controls">
-            <button class="btn btn-primary" id="save-changes" style="width: 100%; margin-bottom: 10px;">SAVE ALL CHANGES</button>
-            <button class="btn btn-secondary" id="logout-btn" style="width: 100%;">LOGOUT</button>
-        </div>
-    </div>
-
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        // Data Storage
-        let portfolioData = {
-            hero: {
-                name: "YOUR NAME",
-                title: "ROBOTICS & MECHATRONICS ENGINEER",
-                tagline: "Designing autonomous systems and intelligent machines that push the boundaries of what's possible in robotics and automation.",
-                image: "profile.jpg"
-            },
-            contact: {
-                description: "Interested in collaboration or have a robotics project in mind? Let's build the future together.",
-                email: "your.email@example.com",
-                github: "yourusername",
-                linkedin: "yourusername",
-                twitter: "yourusername"
-            },
-            projects: [
-                {
-                    id: 1,
-                    title: "Autonomous Mobile Robot",
-                    description: "Developed a fully autonomous navigation system using ROS, LiDAR SLAM, and path planning algorithms for warehouse automation.",
-                    image: "https://images.unsplash.com/photo-1563207153-f403bf289096?w=600&h=400&fit=crop",
-                    tags: ["ROS", "Python", "SLAM", "LiDAR"]
-                },
-                {
-                    id: 2,
-                    title: "Robotic Arm with Vision",
-                    description: "6-DOF robotic arm with computer vision for pick-and-place tasks. Implemented inverse kinematics and object detection using deep learning.",
-                    image: "https://images.unsplash.com/photo-1518314916381-77a37c2a49ae?w=600&h=400&fit=crop",
-                    tags: ["C++", "OpenCV", "Kinematics", "YOLO"]
-                },
-                {
-                    id: 3,
-                    title: "Drone Swarm Coordination",
-                    description: "Multi-agent system for coordinated drone flight using distributed control algorithms and real-time communication protocols.",
-                    image: "https://images.unsplash.com/photo-1589254065878-42c9da997008?w=600&h=400&fit=crop",
-                    tags: ["Multi-Agent", "PX4", "Formation Control"]
-                }
-            ]
-        };
-
-        // Load saved data
-        function loadData() {
-            const saved = localStorage.getItem('portfolioData');
-            if (saved) {
-                try {
-                    portfolioData = JSON.parse(saved);
-                    updateDisplay();
-                } catch (e) {
-                    console.error('Failed to load data');
-                }
-            }
-        }
-
-        // Update display with current data
-        function updateDisplay() {
-            document.getElementById('hero-name').textContent = portfolioData.hero.name;
-            document.getElementById('hero-title').textContent = portfolioData.hero.title;
-            document.getElementById('hero-tagline').textContent = portfolioData.hero.tagline;
-            document.getElementById('hero-image').src = portfolioData.hero.image;
-            
-            document.getElementById('contact-desc').textContent = portfolioData.contact.description;
-            document.getElementById('contact-email').href = `mailto:${portfolioData.contact.email}`;
-            document.getElementById('contact-email').textContent = portfolioData.contact.email;
-            document.getElementById('link-github').href = `https://github.com/${portfolioData.contact.github}`;
-            document.getElementById('link-linkedin').href = `https://linkedin.com/in/${portfolioData.contact.linkedin}`;
-            document.getElementById('link-twitter').href = `https://twitter.com/${portfolioData.contact.twitter}`;
-            
-            renderProjects();
-        }
-
-        // Render projects
-        function renderProjects() {
-            const grid = document.getElementById('projects-grid');
-            grid.innerHTML = portfolioData.projects.map(project => `
-                <div class="project-card" data-project-id="${project.id}">
-                    <img src="${project.image}" alt="${project.title}" class="project-image">
-                    <div class="project-content">
-                        <h3 class="project-title">${project.title}</h3>
-                        <p class="project-desc">${project.description}</p>
-                        <div class="project-tags">
-                            ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+            <!-- ── PROFILE tab ── -->
+            <div class="ap-pane active" id="tab-profile">
+                <div class="ap-section-title">Profile &amp; Identity</div>
+                <div class="ap-grid-2">
+                    <div>
+                        <div class="ap-row"><label>FULL NAME</label><input type="text" id="ep-name" placeholder="Your Name"></div>
+                        <div class="ap-row"><label>TITLE / ROLE</label><input type="text" id="ep-title" placeholder="Robotics & Mechatronics Engineer"></div>
+                        <div class="ap-row"><label>TAGLINE / BIO INTRO</label><textarea id="ep-tagline" rows="4" placeholder="Short intro displayed on the hero section..."></textarea></div>
+                    </div>
+                    <div>
+                        <div class="ap-row">
+                            <label>PROFILE PHOTO</label>
+                            <div class="upload-zone" id="profile-zone">
+                                <input type="file" accept="image/*" id="profile-file-input">
+                                <span class="uz-icon" style="font-size:22px;color:var(--primary);">[ IMG ]</span>
+                                <div class="uz-label">Click to upload profile photo</div>
+                                <div class="uz-hint">JPG, PNG, WEBP — recommended 600×600px</div>
+                            </div>
+                            <img id="profile-preview" class="upload-preview" alt="Profile preview">
+                        </div>
+                        <div class="ap-row">
+                            <label>FAVICON</label>
+                            <div class="upload-zone" id="favicon-zone">
+                                <input type="file" accept="image/*,.ico" id="favicon-file-input">
+                                <span class="uz-icon" style="font-size:22px;color:var(--primary);">[ ICO ]</span>
+                                <div class="uz-label">Click to upload favicon</div>
+                                <div class="uz-hint">PNG or ICO — 32×32px or 64×64px ideal</div>
+                            </div>
+                            <img id="favicon-preview" class="upload-preview" style="max-height:60px;" alt="Favicon preview">
                         </div>
                     </div>
                 </div>
-            `).join('');
-        }
+            </div>
 
-        // Admin Authentication
-        // CHANGE THESE CREDENTIALS!
-        const ADMIN_CREDENTIALS = {
-            username: 'admin',
-            password: 'RoboticsAdmin2026!' // Change this to your secure password
-        };
+            <!-- ── PROJECTS tab ── -->
+            <div class="ap-pane" id="tab-projects">
+                <div class="ap-section-title">Projects</div>
+                <button class="abtn-add" id="add-project-btn">+ ADD NEW PROJECT</button>
 
-        let clickCount = 0;
-        let clickTimer = null;
-
-        document.getElementById('admin-trigger').addEventListener('click', () => {
-            clickCount++;
-            if (clickCount === 1) {
-                clickTimer = setTimeout(() => {
-                    clickCount = 0;
-                }, 1000);
-            }
-            if (clickCount === 3) {
-                clearTimeout(clickTimer);
-                clickCount = 0;
-                document.getElementById('admin-modal').classList.add('active');
-            }
-        });
-
-        document.getElementById('cancel-login').addEventListener('click', () => {
-            document.getElementById('admin-modal').classList.remove('active');
-            document.getElementById('admin-form').reset();
-        });
-
-        document.getElementById('admin-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const username = document.getElementById('admin-username').value;
-            const password = document.getElementById('admin-password').value;
-            
-            if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
-                document.getElementById('admin-modal').classList.remove('active');
-                document.getElementById('admin-panel').classList.add('active');
-                document.body.classList.add('admin-mode');
-                loadEditorData();
-                alert('Admin access granted!');
-            } else {
-                alert('Invalid credentials!');
-            }
-            document.getElementById('admin-form').reset();
-        });
-
-        // Load data into editor
-        function loadEditorData() {
-            document.getElementById('edit-name').value = portfolioData.hero.name;
-            document.getElementById('edit-title').value = portfolioData.hero.title;
-            document.getElementById('edit-tagline').value = portfolioData.hero.tagline;
-            document.getElementById('edit-image').value = portfolioData.hero.image;
-            document.getElementById('edit-email').value = portfolioData.contact.email;
-            document.getElementById('edit-github').value = portfolioData.contact.github;
-            document.getElementById('edit-linkedin').value = portfolioData.contact.linkedin;
-            document.getElementById('edit-twitter').value = portfolioData.contact.twitter;
-            
-            renderProjectsEditor();
-        }
-
-        // Render projects in editor
-        function renderProjectsEditor() {
-            const editor = document.getElementById('projects-editor');
-            editor.innerHTML = portfolioData.projects.map((project, index) => `
-                <div class="project-edit" data-project-id="${project.id}">
-                    <label>Project ${index + 1} - Title</label>
-                    <input type="text" class="project-title-edit" value="${project.title}">
-                    <label>Description</label>
-                    <textarea class="project-desc-edit">${project.description}</textarea>
-                    <label>Image URL</label>
-                    <input type="text" class="project-image-edit" value="${project.image}">
-                    <label>Tags (comma-separated)</label>
-                    <input type="text" class="project-tags-edit" value="${project.tags.join(', ')}">
-                    <button class="delete-btn delete-project" data-id="${project.id}">DELETE PROJECT</button>
+                <!-- Project editor form (hidden until add/edit) -->
+                <div class="item-editor" id="project-editor">
+                    <div class="item-editor-title" id="project-editor-title">NEW PROJECT</div>
+                    <input type="hidden" id="pe-id">
+                    <div class="ap-grid-2">
+                        <div>
+                            <div class="ap-row"><label>PROJECT TITLE</label><input type="text" id="pe-title" placeholder="e.g. Autonomous Mobile Robot"></div>
+                            <div class="ap-row"><label>TECH TAGS (comma-separated)</label><input type="text" id="pe-tags" placeholder="ROS, Python, SLAM"></div>
+                            <div class="ap-row">
+                                <label>COVER IMAGE</label>
+                                <div class="upload-zone">
+                                    <input type="file" accept="image/*" id="pe-cover-input">
+                                    <span class="uz-icon" style="font-size:18px;color:var(--primary);">[ COVER ]</span>
+                                    <div class="uz-label">Upload cover image</div>
+                                    <div class="uz-hint">1200×800px recommended</div>
+                                </div>
+                                <img id="pe-cover-preview" class="upload-preview" alt="">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="ap-row">
+                                <label>PROJECT GALLERY (multiple images)</label>
+                                <div class="upload-zone">
+                                    <input type="file" accept="image/*" multiple id="pe-gallery-input">
+                                    <span class="uz-icon" style="font-size:18px;color:var(--primary);">[ GALLERY ]</span>
+                                    <div class="uz-label">Upload gallery images</div>
+                                    <div class="uz-hint">Select multiple files</div>
+                                </div>
+                                <div class="gallery-grid" id="pe-gallery-grid"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ap-row">
+                        <label>DESCRIPTION / BODY (rich text)</label>
+                        <div class="rte-toolbar">
+                            <button onclick="rteCmd('bold')"><b>B</b></button>
+                            <button onclick="rteCmd('italic')"><i>I</i></button>
+                            <button onclick="rteCmd('underline')"><u>U</u></button>
+                            <button onclick="rteCmd('insertUnorderedList')">List</button>
+                            <button onclick="rteCmd('insertOrderedList')">1. List</button>
+                            <button onclick="rteCmd('formatBlock','h3')">H3</button>
+                            <button onclick="rteCmd('formatBlock','p')">Para</button>
+                        </div>
+                        <div class="rte-editor" id="pe-description" contenteditable="true"></div>
+                    </div>
+                    <div class="item-editor-footer">
+                        <button class="abtn abtn-del" id="pe-cancel">CANCEL</button>
+                        <button class="abtn abtn-save" id="pe-save">SAVE PROJECT</button>
+                    </div>
                 </div>
-            `).join('');
 
-            // Add delete listeners
-            document.querySelectorAll('.delete-project').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const id = parseInt(e.target.dataset.id);
-                    if (confirm('Delete this project?')) {
-                        portfolioData.projects = portfolioData.projects.filter(p => p.id !== id);
-                        renderProjectsEditor();
-                    }
-                });
-            });
+                <div class="content-card-list" id="projects-card-list"></div>
+            </div>
+
+            <!-- ── EXPERIENCE tab ── -->
+            <div class="ap-pane" id="tab-experience">
+                <div class="ap-section-title">Work Experience</div>
+                <button class="abtn-add" id="add-exp-btn">+ ADD EXPERIENCE</button>
+
+                <div class="item-editor" id="exp-editor">
+                    <div class="item-editor-title" id="exp-editor-title">NEW EXPERIENCE</div>
+                    <input type="hidden" id="exe-id">
+                    <div class="ap-grid-2">
+                        <div>
+                            <div class="ap-row"><label>JOB TITLE / ROLE</label><input type="text" id="exe-role" placeholder="Senior Robotics Engineer"></div>
+                            <div class="ap-row"><label>COMPANY / ORGANISATION</label><input type="text" id="exe-org" placeholder="Company Name"></div>
+                            <div class="ap-row"><label>DATE RANGE</label><input type="text" id="exe-date" placeholder="2023 — PRESENT"></div>
+                            <div class="ap-row"><label>LOCATION</label><input type="text" id="exe-location" placeholder="City, Country"></div>
+                            <div class="ap-row"><label>TECH TAGS (comma-separated)</label><input type="text" id="exe-tags" placeholder="ROS2, Python, SLAM"></div>
+                        </div>
+                        <div>
+                            <div class="ap-row">
+                                <label>COMPANY LOGO / IMAGE</label>
+                                <div class="upload-zone">
+                                    <input type="file" accept="image/*" id="exe-img-input">
+                                    <span class="uz-icon" style="font-size:18px;color:var(--primary);">[ IMG ]</span>
+                                    <div class="uz-label">Upload company image or logo</div>
+                                </div>
+                                <img id="exe-img-preview" class="upload-preview" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ap-row"><label>DESCRIPTION</label><textarea id="exe-desc" rows="4" placeholder="Role summary..."></textarea></div>
+                    <div class="ap-row"><label>KEY ACHIEVEMENTS (one per line)</label><textarea id="exe-achievements" rows="5" placeholder="Designed and deployed a SLAM system...&#10;Reduced planning time by 40%..."></textarea></div>
+                    <div class="item-editor-footer">
+                        <button class="abtn abtn-del" id="exe-cancel">CANCEL</button>
+                        <button class="abtn abtn-save" id="exe-save">SAVE</button>
+                    </div>
+                </div>
+
+                <div class="content-card-list" id="exp-card-list"></div>
+            </div>
+
+            <!-- ── EDUCATION tab ── -->
+            <div class="ap-pane" id="tab-education">
+                <div class="ap-section-title">Education</div>
+                <button class="abtn-add" id="add-edu-btn">+ ADD EDUCATION</button>
+
+                <div class="item-editor" id="edu-editor">
+                    <div class="item-editor-title" id="edu-editor-title">NEW EDUCATION ENTRY</div>
+                    <input type="hidden" id="ede-id">
+                    <div class="ap-grid-2">
+                        <div>
+                            <div class="ap-row"><label>DEGREE / CERTIFICATION TITLE</label><input type="text" id="ede-degree" placeholder="MSc Robotics & Autonomous Systems"></div>
+                            <div class="ap-row"><label>INSTITUTION</label><input type="text" id="ede-institution" placeholder="University Name"></div>
+                            <div class="ap-row"><label>DATE RANGE</label><input type="text" id="ede-date" placeholder="2019 — 2021"></div>
+                            <div class="ap-row"><label>TYPE</label>
+                                <select id="ede-type">
+                                    <option value="MSc DEGREE">MSc DEGREE</option>
+                                    <option value="BEng DEGREE">BEng DEGREE</option>
+                                    <option value="BSc DEGREE">BSc DEGREE</option>
+                                    <option value="PhD">PhD</option>
+                                    <option value="CERTIFICATION">CERTIFICATION</option>
+                                    <option value="DIPLOMA">DIPLOMA</option>
+                                </select>
+                            </div>
+                            <div class="ap-row"><label>GPA / GRADE</label><input type="text" id="ede-gpa" placeholder="Distinction / First Class"></div>
+                            <div class="ap-row"><label>THESIS / PROJECT TITLE</label><input type="text" id="ede-thesis" placeholder="Optional thesis title"></div>
+                        </div>
+                        <div>
+                            <div class="ap-row">
+                                <label>INSTITUTION IMAGE / LOGO</label>
+                                <div class="upload-zone">
+                                    <input type="file" accept="image/*" id="ede-img-input">
+                                    <span class="uz-icon" style="font-size:18px;color:var(--primary);">[ IMG ]</span>
+                                    <div class="uz-label">Upload institution logo</div>
+                                </div>
+                                <img id="ede-img-preview" class="upload-preview" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ap-row"><label>DESCRIPTION</label><textarea id="ede-desc" rows="4" placeholder="Brief description of the programme..."></textarea></div>
+                    <div class="ap-row"><label>KEY MODULES (comma-separated)</label><input type="text" id="ede-modules" placeholder="Advanced Robotics, Computer Vision, Motion Planning"></div>
+                    <div class="item-editor-footer">
+                        <button class="abtn abtn-del" id="ede-cancel">CANCEL</button>
+                        <button class="abtn abtn-save" id="ede-save">SAVE</button>
+                    </div>
+                </div>
+
+                <div class="content-card-list" id="edu-card-list"></div>
+            </div>
+
+            <!-- ── PUBLICATIONS tab ── -->
+            <div class="ap-pane" id="tab-publications">
+                <div class="ap-section-title">Publications</div>
+                <button class="abtn-add" id="add-pub-btn">+ ADD PUBLICATION</button>
+
+                <div class="item-editor" id="pub-editor">
+                    <div class="item-editor-title" id="pub-editor-title">NEW PUBLICATION</div>
+                    <input type="hidden" id="pue-id">
+                    <div class="ap-grid-2">
+                        <div>
+                            <div class="ap-row"><label>PAPER TITLE</label><input type="text" id="pue-title" placeholder="Full paper title..."></div>
+                            <div class="ap-row"><label>AUTHORS (bold your name with *name*)</label><input type="text" id="pue-authors" placeholder="*A. Surname*, B. Coauthor"></div>
+                            <div class="ap-row"><label>VENUE (journal / conference)</label><input type="text" id="pue-venue" placeholder="IEEE Transactions on Robotics, Vol. 40..."></div>
+                            <div class="ap-row"><label>YEAR</label><input type="text" id="pue-year" placeholder="2024"></div>
+                            <div class="ap-row"><label>TYPE</label>
+                                <select id="pue-type">
+                                    <option value="JOURNAL">JOURNAL</option>
+                                    <option value="CONFERENCE">CONFERENCE</option>
+                                    <option value="WORKSHOP">WORKSHOP</option>
+                                    <option value="PREPRINT">PREPRINT</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="ap-row"><label>PDF LINK</label><input type="text" id="pue-pdf" placeholder="https://..."></div>
+                            <div class="ap-row"><label>DOI LINK</label><input type="text" id="pue-doi" placeholder="https://doi.org/..."></div>
+                            <div class="ap-row"><label>CODE / PROJECT LINK</label><input type="text" id="pue-code" placeholder="https://github.com/..."></div>
+                            <div class="ap-row"><label>VIDEO LINK (optional)</label><input type="text" id="pue-video" placeholder="https://youtube.com/..."></div>
+                        </div>
+                    </div>
+                    <div class="ap-row"><label>ABSTRACT</label><textarea id="pue-abstract" rows="5" placeholder="Paper abstract..."></textarea></div>
+                    <div class="item-editor-footer">
+                        <button class="abtn abtn-del" id="pue-cancel">CANCEL</button>
+                        <button class="abtn abtn-save" id="pue-save">SAVE</button>
+                    </div>
+                </div>
+
+                <div class="content-card-list" id="pub-card-list"></div>
+            </div>
+
+            <!-- ── CONTACT tab ── -->
+            <div class="ap-pane" id="tab-contact">
+                <div class="ap-section-title">Contact &amp; Links</div>
+                <div class="ap-grid-2">
+                    <div>
+                        <div class="ap-row"><label>EMAIL</label><input type="email" id="ec-email" placeholder="your@email.com"></div>
+                        <div class="ap-row"><label>GITHUB USERNAME</label><input type="text" id="ec-github" placeholder="yourusername"></div>
+                        <div class="ap-row"><label>LINKEDIN USERNAME</label><input type="text" id="ec-linkedin" placeholder="yourusername"></div>
+                        <div class="ap-row"><label>TWITTER / X USERNAME</label><input type="text" id="ec-twitter" placeholder="yourusername"></div>
+                    </div>
+                    <div>
+                        <div class="ap-row"><label>CONTACT SECTION DESCRIPTION</label><textarea id="ec-desc" rows="4" placeholder="Short text shown above the contact button..."></textarea></div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- end ap-body -->
+
+        <div class="ap-save-bar">
+            <button class="abtn-ghost" id="logout-btn-2">LOGOUT</button>
+            <button class="abtn-primary" id="save-all-btn-2">SAVE ALL CHANGES</button>
+        </div>
+    </div><!-- end admin-panel -->
+
+    <div class="ap-toast" id="ap-toast">Changes saved successfully.</div>
+
+    <script>
+    // ═══════════════════════════════════════════════════
+    // DATA STORE — persisted in localStorage
+    // ═══════════════════════════════════════════════════
+    const ADMIN_CREDENTIALS = { username: 'admin', password: 'RoboticsAdmin2026!' };
+
+    let portfolioData = {
+        hero: { name:'YOUR NAME', title:'ROBOTICS & MECHATRONICS ENGINEER', tagline:'Designing autonomous systems and intelligent machines that push the boundaries of what\'s possible in robotics and automation.', image:'profile.jpg', favicon:'' },
+        contact: { description:'Interested in collaboration or have a robotics project in mind? Let\'s build the future together.', email:'your.email@example.com', github:'yourusername', linkedin:'yourusername', twitter:'yourusername' },
+        projects: [
+            { id:1, title:'Autonomous Mobile Robot', description:'Developed a fully autonomous navigation system using ROS, LiDAR SLAM, and path planning algorithms for warehouse automation.', image:'https://images.unsplash.com/photo-1563207153-f403bf289096?w=600&h=400&fit=crop', gallery:[], tags:['ROS','Python','SLAM','LiDAR'] },
+            { id:2, title:'Robotic Arm with Vision', description:'6-DOF robotic arm with computer vision for pick-and-place tasks. Implemented inverse kinematics and object detection using deep learning.', image:'https://images.unsplash.com/photo-1518314916381-77a37c2a49ae?w=600&h=400&fit=crop', gallery:[], tags:['C++','OpenCV','Kinematics','YOLO'] },
+            { id:3, title:'Drone Swarm Coordination', description:'Multi-agent system for coordinated drone flight using distributed control algorithms and real-time communication protocols.', image:'https://images.unsplash.com/photo-1589254065878-42c9da997008?w=600&h=400&fit=crop', gallery:[], tags:['Multi-Agent','PX4','Formation Control'] }
+        ],
+        experience: [
+            {
+                id: 1, role: 'Senior Robotics Engineer', org: 'Company Name', date: '2023 — PRESENT',
+                location: 'Location', tags: ['ROS2','C++','SLAM','Python','Docker'],
+                desc: 'Leading the development of autonomous mobile platforms for industrial logistics. Responsible for full-stack integration from sensor fusion pipelines through to fleet management software.',
+                achievements: [
+                    'Designed and deployed a LiDAR-IMU SLAM system achieving sub-5cm localisation accuracy in dynamic warehouse environments',
+                    'Reduced path planning computation time by 40% through a custom hybrid A*/RRT* algorithm',
+                    'Managed a team of three junior engineers across hardware and software workstreams'
+                ], image: ''
+            },
+            {
+                id: 2, role: 'Robotics Research Engineer', org: 'Research Institute / University', date: '2021 — 2023',
+                location: 'Location', tags: ['PyTorch','Gazebo','MoveIt','RL'],
+                desc: 'Conducted applied research in autonomous manipulation, focusing on model-free reinforcement learning approaches for dexterous robotic grasping.',
+                achievements: [
+                    'Published three peer-reviewed papers on sim-to-real transfer for robotic manipulation',
+                    'Developed a modular software framework used by five research groups across the faculty',
+                    'Supervised two MSc dissertation projects in robot learning'
+                ], image: ''
+            },
+            {
+                id: 3, role: 'Embedded Systems Engineer (Internship)', org: 'Tech Company', date: '2020 — 2021',
+                location: 'Location', tags: ['STM32','C','CAN Bus','FreeRTOS'],
+                desc: 'Developed firmware for next-generation motor controllers and sensor interface boards used in collaborative robotic arms.',
+                achievements: [
+                    'Implemented real-time torque control loops on STM32 microcontrollers with sub-millisecond latency',
+                    'Designed CAN bus communication protocol for multi-axis synchronisation'
+                ], image: ''
+            },
+            {
+                id: 4, role: 'Junior Automation Engineer', org: 'Engineering Firm', date: '2019 — 2020',
+                location: 'Location', tags: ['PLC','SCADA','TIA Portal','HMI'],
+                desc: 'Supported integration and commissioning of PLC-based industrial automation systems for manufacturing clients across the automotive sector.',
+                achievements: [
+                    'Programmed Siemens S7-1500 PLCs for conveyor and assembly line control',
+                    'Produced technical documentation and training materials for client handover'
+                ], image: ''
+            }
+        ],
+        education: [
+            {
+                id: 1, degree: 'MSc Robotics & Autonomous Systems', institution: 'University Name',
+                date: '2019 — 2021', type: 'MSc DEGREE', gpa: 'Distinction (3.9 / 4.0)',
+                thesis: 'Sim-to-Real Transfer in Robotic Grasping',
+                desc: 'Postgraduate research programme focusing on the intersection of control theory, machine learning, and physical robot systems. Dissertation investigated domain randomisation techniques for bridging the sim-to-real gap in model-free reinforcement learning approaches to dexterous manipulation.',
+                modules: ['Advanced Robotics','Computer Vision','Machine Learning','Motion Planning','Sensor Fusion','Human-Robot Interaction'],
+                image: ''
+            },
+            {
+                id: 2, degree: 'BEng Mechatronics Engineering', institution: 'University Name',
+                date: '2015 — 2019', type: 'BEng DEGREE', gpa: 'First Class Honours (3.8 / 4.0)',
+                thesis: 'Autonomous Obstacle Avoidance Platform',
+                desc: 'Four-year integrated programme covering mechanical design, electronics, control systems, and software engineering. Final year project developed a low-cost autonomous ground vehicle capable of real-time obstacle detection and avoidance using a monocular camera and depth estimation network.',
+                modules: ['Dynamics & Control','Embedded Systems','Mechanical Design','Digital Electronics','Signal Processing','Thermodynamics'],
+                image: ''
+            },
+            {
+                id: 3, degree: 'ROS2 Advanced Developer Certification', institution: 'Online Platform / Institution Name',
+                date: '2022', type: 'CERTIFICATION', gpa: '', thesis: '',
+                desc: 'Comprehensive professional certification covering ROS2 architecture, navigation stack, manipulation planning with MoveIt2, and production deployment practices for real-world robotic systems.',
+                modules: [], image: ''
+            }
+        ],
+        publications: [
+            {
+                id: 1, title: 'Domain Randomisation Strategies for Sim-to-Real Transfer in Robotic Grasping',
+                authors: '*A. Surname*, B. Coauthor, C. Coauthor',
+                venue: 'IEEE Transactions on Robotics, Vol. 40, Issue 3, pp. 1234–1248',
+                year: '2024', type: 'JOURNAL',
+                abstract: 'We present a systematic study of domain randomisation parameters in physics-based simulation and their effect on zero-shot transfer performance to physical robotic grasping. Through ablation across texture, lighting, mass, and friction parameters, we identify a minimal randomisation set that achieves 91.4% success rate on a benchmark of unseen objects.',
+                pdf: '#', doi: '#', code: '#', video: ''
+            },
+            {
+                id: 2, title: 'Hybrid A*/RRT* Planning with Learned Heuristics for Warehouse Autonomous Navigation',
+                authors: '*A. Surname*, D. Coauthor',
+                venue: 'IEEE International Conference on Robotics and Automation (ICRA 2023), London, UK',
+                year: '2023', type: 'CONFERENCE',
+                abstract: 'We propose a motion planning algorithm combining informed sampling from RRT* with a neural heuristic trained to approximate the cost-to-go in cluttered warehouse environments. Our method reduces planning time by 42% compared to standard RRT* while maintaining completeness guarantees within dynamic obstacle fields.',
+                pdf: '#', doi: '#', code: '', video: ''
+            },
+            {
+                id: 3, title: 'Real-Time LiDAR-IMU Fusion for Robust Localisation in Dynamic Environments',
+                authors: '*A. Surname*, E. Coauthor, F. Coauthor',
+                venue: 'IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS 2022)',
+                year: '2022', type: 'CONFERENCE',
+                abstract: 'A tightly-coupled LiDAR-IMU state estimator incorporating a learned outlier rejection module for robust ego-motion estimation in the presence of moving objects. Evaluated on the KITTI and NuScenes benchmarks, our system achieves competitive accuracy with significantly lower latency than existing methods.',
+                pdf: '#', doi: '#', code: '#', video: ''
+            },
+            {
+                id: 4, title: 'Towards Data-Efficient Reinforcement Learning for Dexterous Manipulation',
+                authors: '*A. Surname*, G. Coauthor',
+                venue: 'Workshop on Robot Learning, CoRL 2022, Auckland, New Zealand',
+                year: '2022', type: 'WORKSHOP',
+                abstract: 'A position paper examining sample efficiency challenges in deep RL applied to contact-rich manipulation, proposing a curriculum learning framework that progressively increases task difficulty based on estimated agent competence.',
+                pdf: '#', doi: '', code: '', video: ''
+            },
+            {
+                id: 5, title: 'Multi-Agent Formation Control with Distributed Obstacle Avoidance for Drone Swarms',
+                authors: 'H. Coauthor, *A. Surname*, I. Coauthor',
+                venue: 'Autonomous Robots, Vol. 46, pp. 678–694',
+                year: '2021', type: 'JOURNAL',
+                abstract: 'A decentralised control architecture for maintaining geometric formation in a swarm of quadrotors while avoiding static and dynamic obstacles. Each agent uses only local sensing and limited neighbour communication, enabling scalability to large swarm sizes without a central coordinator.',
+                pdf: '#', doi: '#', code: '', video: '#'
+            }
+        ]
+    };
+
+    function loadData() {
+        try {
+            const s = localStorage.getItem('portfolioData');
+            if (s) portfolioData = { ...portfolioData, ...JSON.parse(s) };
+        } catch(e) {}
+        updateDisplay();
+    }
+
+    function saveData() {
+        localStorage.setItem('portfolioData', JSON.stringify(portfolioData));
+        updateDisplay();
+        showToast('Changes saved successfully.');
+    }
+
+    function updateDisplay() {
+        const n = document.getElementById('hero-name');
+        if (n) n.textContent = portfolioData.hero.name;
+        const t = document.getElementById('hero-title');
+        if (t) t.textContent = portfolioData.hero.title;
+        const tg = document.getElementById('hero-tagline');
+        if (tg) tg.textContent = portfolioData.hero.tagline;
+        const img = document.getElementById('hero-image');
+        if (img && portfolioData.hero.image) img.src = portfolioData.hero.image;
+        const cd = document.getElementById('contact-desc');
+        if (cd) cd.textContent = portfolioData.contact.description;
+        const ce = document.getElementById('contact-email');
+        if (ce) { ce.href = 'mailto:'+portfolioData.contact.email; ce.textContent = portfolioData.contact.email; }
+        const gh = document.getElementById('link-github');
+        if (gh) gh.href = 'https://github.com/'+portfolioData.contact.github;
+        const li = document.getElementById('link-linkedin');
+        if (li) li.href = 'https://linkedin.com/in/'+portfolioData.contact.linkedin;
+        const tw = document.getElementById('link-twitter');
+        if (tw) tw.href = 'https://twitter.com/'+portfolioData.contact.twitter;
+        renderProjects();
+    }
+
+    function renderProjects() {
+        const grid = document.getElementById('projects-grid');
+        if (!grid) return;
+        grid.innerHTML = portfolioData.projects.map(p => `
+            <div class="project-card" data-project-id="${p.id}">
+                <img src="${p.image}" alt="${p.title}" class="project-image">
+                <div class="project-content">
+                    <h3 class="project-title">${p.title}</h3>
+                    <p class="project-desc">${typeof p.description === 'string' ? p.description.replace(/<[^>]+>/g,'').substring(0,160)+'...' : ''}</p>
+                    <div class="project-tags">${(p.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+                </div>
+            </div>`).join('');
+    }
+
+    // ═══════════════════════════════════════════════════
+    // TRIPLE-CLICK TRIGGER (reliable, event-delegation)
+    // ═══════════════════════════════════════════════════
+    let clickTimes = [];
+    document.getElementById('admin-trigger').addEventListener('click', function() {
+        const now = Date.now();
+        clickTimes = clickTimes.filter(t => now - t < 1200); // keep last 1.2s
+        clickTimes.push(now);
+        this.classList.add('flash');
+        setTimeout(() => this.classList.remove('flash'), 300);
+        if (clickTimes.length >= 3) {
+            clickTimes = [];
+            document.getElementById('admin-login-overlay').classList.add('active');
         }
+    });
 
-        // Add new project
-        document.getElementById('add-project').addEventListener('click', () => {
-            const newId = Math.max(...portfolioData.projects.map(p => p.id), 0) + 1;
-            portfolioData.projects.push({
-                id: newId,
-                title: "New Project",
-                description: "Project description here",
-                image: "https://images.unsplash.com/photo-1518314916381-77a37c2a49ae?w=600&h=400&fit=crop",
-                tags: ["Tag1", "Tag2"]
-            });
-            renderProjectsEditor();
+    // ═══════════════════════════════════════════════════
+    // LOGIN
+    // ═══════════════════════════════════════════════════
+    document.getElementById('cancel-login').addEventListener('click', () => {
+        document.getElementById('admin-login-overlay').classList.remove('active');
+    });
+
+    document.getElementById('do-login').addEventListener('click', () => {
+        const u = document.getElementById('admin-username').value.trim();
+        const p = document.getElementById('admin-password').value;
+        if (u === ADMIN_CREDENTIALS.username && p === ADMIN_CREDENTIALS.password) {
+            document.getElementById('admin-login-overlay').classList.remove('active');
+            document.getElementById('admin-panel').classList.add('active');
+            loadEditorData();
+        } else {
+            document.getElementById('admin-username').style.borderColor = '#ff0055';
+            document.getElementById('admin-password').style.borderColor = '#ff0055';
+            setTimeout(() => {
+                document.getElementById('admin-username').style.borderColor = '';
+                document.getElementById('admin-password').style.borderColor = '';
+            }, 1200);
+        }
+        document.getElementById('admin-password').value = '';
+    });
+
+    function doLogout() {
+        document.getElementById('admin-panel').classList.remove('active');
+    }
+    document.getElementById('logout-btn').addEventListener('click', doLogout);
+    document.getElementById('logout-btn-2').addEventListener('click', doLogout);
+
+    function doSaveAll() {
+        // Read profile tab
+        portfolioData.hero.name = document.getElementById('ep-name').value;
+        portfolioData.hero.title = document.getElementById('ep-title').value;
+        portfolioData.hero.tagline = document.getElementById('ep-tagline').value;
+        // contact tab
+        portfolioData.contact.email = document.getElementById('ec-email').value;
+        portfolioData.contact.github = document.getElementById('ec-github').value;
+        portfolioData.contact.linkedin = document.getElementById('ec-linkedin').value;
+        portfolioData.contact.twitter = document.getElementById('ec-twitter').value;
+        portfolioData.contact.description = document.getElementById('ec-desc').value;
+        saveData();
+    }
+    document.getElementById('save-all-btn').addEventListener('click', doSaveAll);
+    document.getElementById('save-all-btn-2').addEventListener('click', doSaveAll);
+
+    // ═══════════════════════════════════════════════════
+    // TABS
+    // ═══════════════════════════════════════════════════
+    document.querySelectorAll('.ap-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.ap-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.ap-pane').forEach(p => p.classList.remove('active'));
+            tab.classList.add('active');
+            document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
         });
+    });
 
-        // Save changes
-        document.getElementById('save-changes').addEventListener('click', () => {
-            // Update hero data
-            portfolioData.hero.name = document.getElementById('edit-name').value;
-            portfolioData.hero.title = document.getElementById('edit-title').value;
-            portfolioData.hero.tagline = document.getElementById('edit-tagline').value;
-            portfolioData.hero.image = document.getElementById('edit-image').value;
-            
-            // Update contact data
-            portfolioData.contact.email = document.getElementById('edit-email').value;
-            portfolioData.contact.github = document.getElementById('edit-github').value;
-            portfolioData.contact.linkedin = document.getElementById('edit-linkedin').value;
-            portfolioData.contact.twitter = document.getElementById('edit-twitter').value;
-            
-            // Update projects
-            document.querySelectorAll('.project-edit').forEach(projectEl => {
-                const id = parseInt(projectEl.dataset.projectId);
-                const project = portfolioData.projects.find(p => p.id === id);
-                if (project) {
-                    project.title = projectEl.querySelector('.project-title-edit').value;
-                    project.description = projectEl.querySelector('.project-desc-edit').value;
-                    project.image = projectEl.querySelector('.project-image-edit').value;
-                    project.tags = projectEl.querySelector('.project-tags-edit').value.split(',').map(t => t.trim());
-                }
-            });
-            
-            // Save to localStorage
-            localStorage.setItem('portfolioData', JSON.stringify(portfolioData));
-            updateDisplay();
-            alert('Changes saved successfully!');
+    // ═══════════════════════════════════════════════════
+    // LOAD DATA INTO EDITOR
+    // ═══════════════════════════════════════════════════
+    function loadEditorData() {
+        document.getElementById('ep-name').value = portfolioData.hero.name;
+        document.getElementById('ep-title').value = portfolioData.hero.title;
+        document.getElementById('ep-tagline').value = portfolioData.hero.tagline;
+        if (portfolioData.hero.image) { const pi = document.getElementById('profile-preview'); pi.src = portfolioData.hero.image; pi.style.display = 'block'; }
+        document.getElementById('ec-email').value = portfolioData.contact.email;
+        document.getElementById('ec-github').value = portfolioData.contact.github;
+        document.getElementById('ec-linkedin').value = portfolioData.contact.linkedin;
+        document.getElementById('ec-twitter').value = portfolioData.contact.twitter;
+        document.getElementById('ec-desc').value = portfolioData.contact.description;
+        renderProjectCards();
+        renderExpCards();
+        renderEduCards();
+        renderPubCards();
+    }
+
+    // ═══════════════════════════════════════════════════
+    // IMAGE UPLOAD HELPER
+    // ═══════════════════════════════════════════════════
+    function bindImageUpload(inputId, previewId, onLoad) {
+        document.getElementById(inputId).addEventListener('change', function() {
+            const file = this.files[0]; if (!file) return;
+            const reader = new FileReader();
+            reader.onload = e => {
+                const prev = document.getElementById(previewId);
+                prev.src = e.target.result; prev.style.display = 'block';
+                if (onLoad) onLoad(e.target.result);
+            };
+            reader.readAsDataURL(file);
         });
+    }
 
-        // Logout
-        document.getElementById('logout-btn').addEventListener('click', () => {
-            document.getElementById('admin-panel').classList.remove('active');
-            document.body.classList.remove('admin-mode');
+    bindImageUpload('profile-file-input', 'profile-preview', (b64) => { portfolioData.hero.image = b64; });
+    bindImageUpload('favicon-file-input', 'favicon-preview', (b64) => {
+        portfolioData.hero.favicon = b64;
+        let link = document.querySelector("link[rel*='icon']");
+        if (!link) { link = document.createElement('link'); link.rel='icon'; document.head.appendChild(link); }
+        link.href = b64;
+    });
+
+    // ═══════════════════════════════════════════════════
+    // RICH TEXT EDITOR
+    // ═══════════════════════════════════════════════════
+    function rteCmd(cmd, val) {
+        document.getElementById('pe-description').focus();
+        document.execCommand(cmd, false, val || null);
+    }
+
+    // ═══════════════════════════════════════════════════
+    // PROJECTS
+    // ═══════════════════════════════════════════════════
+    let editingProjectId = null;
+    let peGallery = []; // base64 array
+
+    document.getElementById('add-project-btn').addEventListener('click', () => openProjectEditor(null));
+    document.getElementById('pe-cancel').addEventListener('click', () => closeEditor('project-editor'));
+    document.getElementById('pe-save').addEventListener('click', saveProject);
+
+    bindImageUpload('pe-cover-input', 'pe-cover-preview', () => {});
+
+    document.getElementById('pe-gallery-input').addEventListener('change', function() {
+        const files = Array.from(this.files);
+        files.forEach(file => {
+            const reader = new FileReader();
+            reader.onload = e => {
+                peGallery.push(e.target.result);
+                renderGalleryGrid();
+            };
+            reader.readAsDataURL(file);
         });
+    });
 
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAt
+    function renderGalleryGrid() {
+        const grid = document.getElementById('pe-gallery-grid');
+        grid.innerHTML = peGallery.map((src, i) => `
+            <div class="gallery-thumb">
+                <img src="${src}">
+                <button class="rm-thumb" onclick="removeGalleryImg(${i})">x</button>
+            </div>`).join('');
+    }
+    window.removeGalleryImg = (i) => { peGallery.splice(i,1); renderGalleryGrid(); };
+
+    function openProjectEditor(id) {
+        editingProjectId = id;
+        peGallery = [];
+        const ed = document.getElementById('project-editor');
+        if (id === null) {
+            document.getElementById('project-editor-title').textContent = 'NEW PROJECT';
+            document.getElementById('pe-id').value = '';
+            document.getElementById('pe-title').value = '';
+            document.getElementById('pe-tags').value = '';
+            document.getElementById('pe-description').innerHTML = '';
+            document.getElementById('pe-cover-preview').style.display = 'none';
+            document.getElementById('pe-gallery-grid').innerHTML = '';
+        } else {
+            const p = portfolioData.projects.find(x => x.id === id);
+            if (!p) return;
+            document.getElementById('project-editor-title').textContent = 'EDIT PROJECT';
+            document.getElementById('pe-id').value = id;
+            document.getElementById('pe-title').value = p.title;
+            document.getElementById('pe-tags').value = (p.tags||[]).join(', ');
+            document.getElementById('pe-description').innerHTML = p.description || '';
+            if (p.image) { const cv = document.getElementById('pe-cover-preview'); cv.src = p.image; cv.style.display = 'block'; }
+            peGallery = p.gallery ? [...p.gallery] : [];
+            renderGalleryGrid();
+        }
+        ed.classList.add('open');
+        ed.scrollIntoView({ behavior:'smooth', block:'start' });
+    }
+
+    function saveProject() {
+        const title = document.getElementById('pe-title').value.trim();
+        if (!title) return;
+        const coverEl = document.getElementById('pe-cover-preview');
+        const image = coverEl.style.display !== 'none' ? coverEl.src : 'https://images.unsplash.com/photo-1518314916381-77a37c2a49ae?w=600&h=400&fit=crop';
+        const desc = document.getElementById('pe-description').innerHTML;
+        const tags = document.getElementById('pe-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+        const idVal = parseInt(document.getElementById('pe-id').value);
+        if (!isNaN(idVal) && idVal) {
+            const p = portfolioData.projects.find(x => x.id === idVal);
+            if (p) { p.title=title; p.description=desc; p.image=image; p.tags=tags; p.gallery=[...peGallery]; }
+        } else {
+            const newId = Math.max(0,...portfolioData.projects.map(p=>p.id))+1;
+            portfolioData.projects.push({ id:newId, title, description:desc, image, gallery:[...peGallery], tags });
+        }
+        closeEditor('project-editor');
+        renderProjectCards();
+        renderProjects();
+    }
+
+    function renderProjectCards() {
+        const list = document.getElementById('projects-card-list');
+        list.innerHTML = portfolioData.projects.map(p => `
+            <div class="content-card">
+                <div class="content-card-info">
+                    <h4>${p.title}</h4>
+                    <p>${(p.tags||[]).join(' · ')}</p>
+                </div>
+                <div class="content-card-actions">
+                    <button class="abtn abtn-edit" onclick="openProjectEditor(${p.id})">EDIT</button>
+                    <button class="abtn abtn-del" onclick="deleteItem('projects',${p.id})">DELETE</button>
+                </div>
+            </div>`).join('');
+    }
+
+    // ═══════════════════════════════════════════════════
+    // EXPERIENCE
+    // ═══════════════════════════════════════════════════
+    let editingExpId = null;
+    document.getElementById('add-exp-btn').addEventListener('click', () => openExpEditor(null));
+    document.getElementById('exe-cancel').addEventListener('click', () => closeEditor('exp-editor'));
+    document.getElementById('exe-save').addEventListener('click', saveExp);
+    bindImageUpload('exe-img-input', 'exe-img-preview', () => {});
+
+    function openExpEditor(id) {
+        editingExpId = id;
+        const ed = document.getElementById('exp-editor');
+        if (id === null) {
+            document.getElementById('exp-editor-title').textContent = 'NEW EXPERIENCE';
+            document.getElementById('exe-id').value = '';
+            ['exe-role','exe-org','exe-date','exe-location','exe-tags','exe-desc','exe-achievements'].forEach(i => document.getElementById(i).value = '');
+            document.getElementById('exe-img-preview').style.display = 'none';
+        } else {
+            const e = portfolioData.experience.find(x=>x.id===id); if(!e) return;
+            document.getElementById('exp-editor-title').textContent = 'EDIT EXPERIENCE';
+            document.getElementById('exe-id').value = id;
+            document.getElementById('exe-role').value = e.role||'';
+            document.getElementById('exe-org').value = e.org||'';
+            document.getElementById('exe-date').value = e.date||'';
+            document.getElementById('exe-location').value = e.location||'';
+            document.getElementById('exe-tags').value = (e.tags||[]).join(', ');
+            document.getElementById('exe-desc').value = e.desc||'';
+            document.getElementById('exe-achievements').value = (e.achievements||[]).join('\n');
+            if (e.image) { const pi = document.getElementById('exe-img-preview'); pi.src=e.image; pi.style.display='block'; }
+        }
+        ed.classList.add('open'); ed.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+
+    function saveExp() {
+        const role = document.getElementById('exe-role').value.trim(); if(!role) return;
+        const imgEl = document.getElementById('exe-img-preview');
+        const item = {
+            id: parseInt(document.getElementById('exe-id').value)||null,
+            role, org:document.getElementById('exe-org').value,
+            date:document.getElementById('exe-date').value,
+            location:document.getElementById('exe-location').value,
+            tags:document.getElementById('exe-tags').value.split(',').map(t=>t.trim()).filter(Boolean),
+            desc:document.getElementById('exe-desc').value,
+            achievements:document.getElementById('exe-achievements').value.split('\n').map(s=>s.trim()).filter(Boolean),
+            image: imgEl.style.display!=='none'?imgEl.src:''
+        };
+        if (item.id) {
+            const idx = portfolioData.experience.findIndex(x=>x.id===item.id);
+            if(idx>-1) portfolioData.experience[idx]=item; else portfolioData.experience.push(item);
+        } else {
+            item.id = Math.max(0,...portfolioData.experience.map(x=>x.id))+1;
+            portfolioData.experience.push(item);
+        }
+        closeEditor('exp-editor'); renderExpCards();
+    }
+
+    function renderExpCards() {
+        const list = document.getElementById('exp-card-list');
+        list.innerHTML = portfolioData.experience.length ? portfolioData.experience.map(e => `
+            <div class="content-card">
+                <div class="content-card-info"><h4>${e.role}</h4><p>${e.org} &mdash; ${e.date}</p></div>
+                <div class="content-card-actions">
+                    <button class="abtn abtn-edit" onclick="openExpEditor(${e.id})">EDIT</button>
+                    <button class="abtn abtn-del" onclick="deleteItem('experience',${e.id})">DELETE</button>
+                </div>
+            </div>`).join('') : '<p style="color:var(--text-dim);font-size:14px;padding:16px 0;">No experience entries yet. Click the button above to add one.</p>';
+    }
+
+    // ═══════════════════════════════════════════════════
+    // EDUCATION
+    // ═══════════════════════════════════════════════════
+    let editingEduId = null;
+    document.getElementById('add-edu-btn').addEventListener('click', () => openEduEditor(null));
+    document.getElementById('ede-cancel').addEventListener('click', () => closeEditor('edu-editor'));
+    document.getElementById('ede-save').addEventListener('click', saveEdu);
+    bindImageUpload('ede-img-input', 'ede-img-preview', () => {});
+
+    function openEduEditor(id) {
+        editingEduId = id;
+        const ed = document.getElementById('edu-editor');
+        if (id === null) {
+            document.getElementById('edu-editor-title').textContent = 'NEW EDUCATION ENTRY';
+            document.getElementById('ede-id').value = '';
+            ['ede-degree','ede-institution','ede-date','ede-gpa','ede-thesis','ede-desc','ede-modules'].forEach(i => document.getElementById(i).value = '');
+            document.getElementById('ede-type').value = 'MSc DEGREE';
+            document.getElementById('ede-img-preview').style.display = 'none';
+        } else {
+            const e = portfolioData.education.find(x=>x.id===id); if(!e) return;
+            document.getElementById('edu-editor-title').textContent = 'EDIT EDUCATION';
+            document.getElementById('ede-id').value = id;
+            document.getElementById('ede-degree').value = e.degree||'';
+            document.getElementById('ede-institution').value = e.institution||'';
+            document.getElementById('ede-date').value = e.date||'';
+            document.getElementById('ede-type').value = e.type||'MSc DEGREE';
+            document.getElementById('ede-gpa').value = e.gpa||'';
+            document.getElementById('ede-thesis').value = e.thesis||'';
+            document.getElementById('ede-desc').value = e.desc||'';
+            document.getElementById('ede-modules').value = (e.modules||[]).join(', ');
+            if (e.image) { const pi = document.getElementById('ede-img-preview'); pi.src=e.image; pi.style.display='block'; }
+        }
+        ed.classList.add('open'); ed.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+
+    function saveEdu() {
+        const degree = document.getElementById('ede-degree').value.trim(); if(!degree) return;
+        const imgEl = document.getElementById('ede-img-preview');
+        const item = {
+            id: parseInt(document.getElementById('ede-id').value)||null,
+            degree, institution:document.getElementById('ede-institution').value,
+            date:document.getElementById('ede-date').value,
+            type:document.getElementById('ede-type').value,
+            gpa:document.getElementById('ede-gpa').value,
+            thesis:document.getElementById('ede-thesis').value,
+            desc:document.getElementById('ede-desc').value,
+            modules:document.getElementById('ede-modules').value.split(',').map(t=>t.trim()).filter(Boolean),
+            image:imgEl.style.display!=='none'?imgEl.src:''
+        };
+        if (item.id) {
+            const idx = portfolioData.education.findIndex(x=>x.id===item.id);
+            if(idx>-1) portfolioData.education[idx]=item; else portfolioData.education.push(item);
+        } else {
+            item.id = Math.max(0,...portfolioData.education.map(x=>x.id))+1;
+            portfolioData.education.push(item);
+        }
+        closeEditor('edu-editor'); renderEduCards();
+    }
+
+    function renderEduCards() {
+        const list = document.getElementById('edu-card-list');
+        list.innerHTML = portfolioData.education.length ? portfolioData.education.map(e => `
+            <div class="content-card">
+                <div class="content-card-info"><h4>${e.degree}</h4><p>${e.institution} &mdash; ${e.date}</p></div>
+                <div class="content-card-actions">
+                    <button class="abtn abtn-edit" onclick="openEduEditor(${e.id})">EDIT</button>
+                    <button class="abtn abtn-del" onclick="deleteItem('education',${e.id})">DELETE</button>
+                </div>
+            </div>`).join('') : '<p style="color:var(--text-dim);font-size:14px;padding:16px 0;">No education entries yet.</p>';
+    }
+
+    // ═══════════════════════════════════════════════════
+    // PUBLICATIONS
+    // ═══════════════════════════════════════════════════
+    let editingPubId = null;
+    document.getElementById('add-pub-btn').addEventListener('click', () => openPubEditor(null));
+    document.getElementById('pue-cancel').addEventListener('click', () => closeEditor('pub-editor'));
+    document.getElementById('pue-save').addEventListener('click', savePub);
+
+    function openPubEditor(id) {
+        editingPubId = id;
+        const ed = document.getElementById('pub-editor');
+        if (id === null) {
+            document.getElementById('pub-editor-title').textContent = 'NEW PUBLICATION';
+            document.getElementById('pue-id').value = '';
+            ['pue-title','pue-authors','pue-venue','pue-year','pue-abstract','pue-pdf','pue-doi','pue-code','pue-video'].forEach(i => document.getElementById(i).value = '');
+            document.getElementById('pue-type').value = 'JOURNAL';
+        } else {
+            const p = portfolioData.publications.find(x=>x.id===id); if(!p) return;
+            document.getElementById('pub-editor-title').textContent = 'EDIT PUBLICATION';
+            document.getElementById('pue-id').value = id;
+            document.getElementById('pue-title').value = p.title||'';
+            document.getElementById('pue-authors').value = p.authors||'';
+            document.getElementById('pue-venue').value = p.venue||'';
+            document.getElementById('pue-year').value = p.year||'';
+            document.getElementById('pue-type').value = p.type||'JOURNAL';
+            document.getElementById('pue-abstract').value = p.abstract||'';
+            document.getElementById('pue-pdf').value = p.pdf||'';
+            document.getElementById('pue-doi').value = p.doi||'';
+            document.getElementById('pue-code').value = p.code||'';
+            document.getElementById('pue-video').value = p.video||'';
+        }
+        ed.classList.add('open'); ed.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+
+    function savePub() {
+        const title = document.getElementById('pue-title').value.trim(); if(!title) return;
+        const item = {
+            id: parseInt(document.getElementById('pue-id').value)||null,
+            title, authors:document.getElementById('pue-authors').value,
+            venue:document.getElementById('pue-venue').value,
+            year:document.getElementById('pue-year').value,
+            type:document.getElementById('pue-type').value,
+            abstract:document.getElementById('pue-abstract').value,
+            pdf:document.getElementById('pue-pdf').value,
+            doi:document.getElementById('pue-doi').value,
+            code:document.getElementById('pue-code').value,
+            video:document.getElementById('pue-video').value
+        };
+        if (item.id) {
+            const idx = portfolioData.publications.findIndex(x=>x.id===item.id);
+            if(idx>-1) portfolioData.publications[idx]=item; else portfolioData.publications.push(item);
+        } else {
+            item.id = Math.max(0,...portfolioData.publications.map(x=>x.id))+1;
+            portfolioData.publications.push(item);
+        }
+        closeEditor('pub-editor'); renderPubCards();
+    }
+
+    function renderPubCards() {
+        const list = document.getElementById('pub-card-list');
+        list.innerHTML = portfolioData.publications.length ? portfolioData.publications.map(p => `
+            <div class="content-card">
+                <div class="content-card-info"><h4>${p.title}</h4><p>${p.type} &mdash; ${p.venue ? p.venue.substring(0,60)+'...' : ''}</p></div>
+                <div class="content-card-actions">
+                    <button class="abtn abtn-edit" onclick="openPubEditor(${p.id})">EDIT</button>
+                    <button class="abtn abtn-del" onclick="deleteItem('publications',${p.id})">DELETE</button>
+                </div>
+            </div>`).join('') : '<p style="color:var(--text-dim);font-size:14px;padding:16px 0;">No publications yet.</p>';
+    }
+
+    // ═══════════════════════════════════════════════════
+    // SHARED HELPERS
+    // ═══════════════════════════════════════════════════
+    function closeEditor(id) { document.getElementById(id).classList.remove('open'); }
+
+    window.deleteItem = (section, id) => {
+        if (!confirm('Delete this entry?')) return;
+        portfolioData[section] = portfolioData[section].filter(x => x.id !== id);
+        if (section==='projects') { renderProjectCards(); renderProjects(); }
+        if (section==='experience') renderExpCards();
+        if (section==='education') renderEduCards();
+        if (section==='publications') renderPubCards();
+    };
+    window.openProjectEditor = openProjectEditor;
+    window.openExpEditor = openExpEditor;
+    window.openEduEditor = openEduEditor;
+    window.openPubEditor = openPubEditor;
+
+    function showToast(msg) {
+        const t = document.getElementById('ap-toast');
+        t.textContent = msg; t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    // ═══════════════════════════════════════════════════
+    // SMOOTH SCROLL
+    // ═══════════════════════════════════════════════════
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) target.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+
+    // ═══════════════════════════════════════════════════
+    // INIT
+    // ═══════════════════════════════════════════════════
+    loadData();
+    </script>
+</body>
+</html>
